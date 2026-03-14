@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.apigen.com/schemas/endpoint.json",
+  "title": "APIGen Endpoint",
+  "description": "An API endpoint defining a single operation with its path, method, and request/response schemas.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the endpoint."
+    },
+    "apiId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the parent API."
+    },
+    "path": {
+      "type": "string",
+      "pattern": "^/",
+      "description": "URL path for the endpoint, starting with a forward slash."
+    },
+    "method": {
+      "type": "string",
+      "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"],
+      "description": "HTTP method for the endpoint."
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 255,
+      "description": "Short summary of what the endpoint does."
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the endpoint behavior."
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "in": {
+            "type": "string",
+            "enum": ["path", "query", "header"]
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "schema": {
+            "type": "object"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "in"]
+      },
+      "description": "Path, query, and header parameters."
+    },
+    "requestSchema": {
+      "type": "object",
+      "description": "JSON Schema defining the request body."
+    },
+    "responseSchema": {
+      "type": "object",
+      "description": "JSON Schema defining the success response body."
+    },
+    "authentication": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this endpoint requires authentication."
+    },
+    "connectorId": {
+      "type": ["string", "null"],
+      "format": "uuid",
+      "description": "ID of the connector used as the data source for this endpoint."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the endpoint was created."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the endpoint was last updated."
+    }
+  },
+  "required": ["id", "apiId", "path", "method", "createdAt", "updatedAt"],
+  "additionalProperties": false
+}

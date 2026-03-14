@@ -10,6 +10,18 @@ apis:
     properties:
       - url: https://www.apigen.com/
         type: Documentation
+      - url: openapi/apigen-apigen-openapi.yml
+        type: OpenAPI
+      - url: json-schema/apigen-project-schema.json
+        type: JSONSchema
+      - url: json-schema/apigen-api-schema.json
+        type: JSONSchema
+      - url: json-schema/apigen-endpoint-schema.json
+        type: JSONSchema
+      - url: json-schema/apigen-deployment-schema.json
+        type: JSONSchema
+      - url: json-ld/apigen-context.jsonld
+        type: JSONLD
     description: >-
       Build entire custom APIs in minutes. From connectors to entire backends,
       design, build, test and deploy your APIs from a prompt or spec.
@@ -27,7 +39,7 @@ type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 created: '2025-01-08'
-modified: '2025-01-13'
+modified: '2026-03-14'
 position: Consumer
 description: >-
   APIGen is a powerful tool that enables developers to quickly and easily

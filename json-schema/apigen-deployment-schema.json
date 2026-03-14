@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.apigen.com/schemas/deployment.json",
+  "title": "APIGen Deployment",
+  "description": "A deployment record representing an API deployed to a target environment.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the deployment."
+    },
+    "apiId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the deployed API."
+    },
+    "projectId": {
+      "type": "string",
+      "format": "uuid",
+      "description": "ID of the parent project."
+    },
+    "environment": {
+      "type": "string",
+      "enum": ["development", "staging", "production"],
+      "description": "Target environment for the deployment."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "in_progress", "deployed", "failed", "torn_down"],
+      "description": "Current status of the deployment."
+    },
+    "url": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "Live URL of the deployed API, available once deployment succeeds."
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the API that was deployed."
+    },
+    "region": {
+      "type": "string",
+      "description": "Cloud region where the API is deployed."
+    },
+    "replicas": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 1,
+      "description": "Number of running instances."
+    },
+    "logs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "level": {
+            "type": "string",
+            "enum": ["info", "warn", "error"]
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": ["timestamp", "level", "message"]
+      },
+      "description": "Deployment log entries."
+    },
+    "deployedBy": {
+      "type": "string",
+      "format": "uuid",
+      "description": "User ID of the person who initiated the deployment."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the deployment was initiated."
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the deployment record was last updated."
+    }
+  },
+  "required": ["id", "apiId", "projectId", "environment", "status", "createdAt", "updatedAt"],
+  "additionalProperties": false
+}

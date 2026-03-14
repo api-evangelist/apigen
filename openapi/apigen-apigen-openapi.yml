@@ -1,0 +1,1663 @@
+openapi: 3.1.0
+info:
+  title: APIGen API
+  description: >-
+    The APIGen API provides programmatic access to the APIGen AI-powered API
+    generation platform. It allows you to manage projects, design and generate
+    APIs, define endpoints and schemas, configure connectors to external data
+    sources, deploy APIs to various environments, run automated tests, and
+    manage users and API tokens.
+  version: 1.0.0
+  contact:
+    name: APIGen Support
+    url: https://www.apigen.com/support
+    email: support@apigen.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+  - url: https://api.apigen.com/v1
+    description: Production
+paths:
+
+  /projects:
+    get:
+      operationId: listProjects
+      summary: List projects
+      description: Returns a paginated list of projects for the authenticated user.
+      tags:
+        - Projects
+      parameters:
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A list of projects.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project'
+                  total:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createProject
+      summary: Create a project
+      description: Creates a new API generation project.
+      tags:
+        - Projects
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectInput'
+      responses:
+        '201':
+          description: Project created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
+  /projects/{projectId}:
+    get:
+      operationId: getProject
+      summary: Get a project
+      description: Returns a single project by ID.
+      tags:
+        - Projects
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+      responses:
+        '200':
+          description: A project.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateProject
+      summary: Update a project
+      description: Updates an existing project.
+      tags:
+        - Projects
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectInput'
+      responses:
+        '200':
+          description: Project updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    delete:
+      operationId: deleteProject
+      summary: Delete a project
+      description: Deletes a project and all associated resources.
+      tags:
+        - Projects
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+      responses:
+        '204':
+          description: Project deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /projects/{projectId}/apis:
+    get:
+      operationId: listApis
+      summary: List APIs in a project
+      description: Returns all APIs belonging to a project.
+      tags:
+        - APIs
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A list of APIs.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Api'
+                  total:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createApi
+      summary: Create an API
+      description: >-
+        Creates a new API within a project. You can provide a prompt for
+        AI-powered generation or supply an existing OpenAPI specification.
+      tags:
+        - APIs
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiInput'
+      responses:
+        '201':
+          description: API created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
+  /projects/{projectId}/apis/{apiId}:
+    get:
+      operationId: getApi
+      summary: Get an API
+      description: Returns a single API by ID.
+      tags:
+        - APIs
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+      responses:
+        '200':
+          description: An API.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateApi
+      summary: Update an API
+      description: Updates an existing API definition.
+      tags:
+        - APIs
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiInput'
+      responses:
+        '200':
+          description: API updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Api'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    delete:
+      operationId: deleteApi
+      summary: Delete an API
+      description: Deletes an API and its endpoints.
+      tags:
+        - APIs
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+      responses:
+        '204':
+          description: API deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /projects/{projectId}/apis/{apiId}/endpoints:
+    get:
+      operationId: listEndpoints
+      summary: List endpoints
+      description: Returns all endpoints for an API.
+      tags:
+        - Endpoints
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A list of endpoints.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Endpoint'
+                  total:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createEndpoint
+      summary: Create an endpoint
+      description: Creates a new endpoint for an API.
+      tags:
+        - Endpoints
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EndpointInput'
+      responses:
+        '201':
+          description: Endpoint created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endpoint'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
+  /projects/{projectId}/apis/{apiId}/endpoints/{endpointId}:
+    get:
+      operationId: getEndpoint
+      summary: Get an endpoint
+      description: Returns a single endpoint by ID.
+      tags:
+        - Endpoints
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+        - $ref: '#/components/parameters/EndpointId'
+      responses:
+        '200':
+          description: An endpoint.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endpoint'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateEndpoint
+      summary: Update an endpoint
+      description: Updates an existing endpoint.
+      tags:
+        - Endpoints
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+        - $ref: '#/components/parameters/EndpointId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EndpointInput'
+      responses:
+        '200':
+          description: Endpoint updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Endpoint'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    delete:
+      operationId: deleteEndpoint
+      summary: Delete an endpoint
+      description: Deletes an endpoint.
+      tags:
+        - Endpoints
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+        - $ref: '#/components/parameters/EndpointId'
+      responses:
+        '204':
+          description: Endpoint deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /projects/{projectId}/apis/{apiId}/schemas:
+    get:
+      operationId: listSchemas
+      summary: List schemas
+      description: Returns all schemas defined for an API.
+      tags:
+        - Schemas
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A list of schemas.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Schema'
+                  total:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createSchema
+      summary: Create a schema
+      description: Creates a new data schema for an API.
+      tags:
+        - Schemas
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SchemaInput'
+      responses:
+        '201':
+          description: Schema created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schema'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
+  /projects/{projectId}/apis/{apiId}/schemas/{schemaId}:
+    get:
+      operationId: getSchema
+      summary: Get a schema
+      description: Returns a single schema by ID.
+      tags:
+        - Schemas
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+        - $ref: '#/components/parameters/SchemaId'
+      responses:
+        '200':
+          description: A schema.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schema'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateSchema
+      summary: Update a schema
+      description: Updates an existing schema definition.
+      tags:
+        - Schemas
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+        - $ref: '#/components/parameters/SchemaId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SchemaInput'
+      responses:
+        '200':
+          description: Schema updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schema'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    delete:
+      operationId: deleteSchema
+      summary: Delete a schema
+      description: Deletes a schema.
+      tags:
+        - Schemas
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+        - $ref: '#/components/parameters/SchemaId'
+      responses:
+        '204':
+          description: Schema deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /projects/{projectId}/connectors:
+    get:
+      operationId: listConnectors
+      summary: List connectors
+      description: Returns all connectors configured for a project.
+      tags:
+        - Connectors
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A list of connectors.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Connector'
+                  total:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createConnector
+      summary: Create a connector
+      description: >-
+        Creates a new connector to an external data source such as a database,
+        third-party API, or file store.
+      tags:
+        - Connectors
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConnectorInput'
+      responses:
+        '201':
+          description: Connector created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connector'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
+  /projects/{projectId}/connectors/{connectorId}:
+    get:
+      operationId: getConnector
+      summary: Get a connector
+      description: Returns a single connector by ID.
+      tags:
+        - Connectors
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ConnectorId'
+      responses:
+        '200':
+          description: A connector.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connector'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateConnector
+      summary: Update a connector
+      description: Updates an existing connector configuration.
+      tags:
+        - Connectors
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ConnectorId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConnectorInput'
+      responses:
+        '200':
+          description: Connector updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connector'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    delete:
+      operationId: deleteConnector
+      summary: Delete a connector
+      description: Deletes a connector.
+      tags:
+        - Connectors
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ConnectorId'
+      responses:
+        '204':
+          description: Connector deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /projects/{projectId}/apis/{apiId}/deployments:
+    get:
+      operationId: listDeployments
+      summary: List deployments
+      description: Returns all deployments for an API.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A list of deployments.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Deployment'
+                  total:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createDeployment
+      summary: Create a deployment
+      description: Deploys an API to a target environment.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeploymentInput'
+      responses:
+        '201':
+          description: Deployment initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
+  /projects/{projectId}/apis/{apiId}/deployments/{deploymentId}:
+    get:
+      operationId: getDeployment
+      summary: Get a deployment
+      description: Returns a single deployment by ID including its current status.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+        - $ref: '#/components/parameters/DeploymentId'
+      responses:
+        '200':
+          description: A deployment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Deployment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDeployment
+      summary: Tear down a deployment
+      description: Tears down a deployment and removes the API from the target environment.
+      tags:
+        - Deployments
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+        - $ref: '#/components/parameters/DeploymentId'
+      responses:
+        '204':
+          description: Deployment torn down.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /projects/{projectId}/apis/{apiId}/tests:
+    get:
+      operationId: listTests
+      summary: List tests
+      description: Returns all test suites for an API.
+      tags:
+        - Tests
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+        - $ref: '#/components/parameters/Limit'
+        - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A list of tests.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Test'
+                  total:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createTest
+      summary: Create a test
+      description: Creates a new test suite for an API.
+      tags:
+        - Tests
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestInput'
+      responses:
+        '201':
+          description: Test created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Test'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
+  /projects/{projectId}/apis/{apiId}/tests/{testId}:
+    get:
+      operationId: getTest
+      summary: Get a test
+      description: Returns a single test suite by ID.
+      tags:
+        - Tests
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+        - $ref: '#/components/parameters/TestId'
+      responses:
+        '200':
+          description: A test.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Test'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteTest
+      summary: Delete a test
+      description: Deletes a test suite.
+      tags:
+        - Tests
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+        - $ref: '#/components/parameters/TestId'
+      responses:
+        '204':
+          description: Test deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /projects/{projectId}/apis/{apiId}/tests/{testId}/run:
+    post:
+      operationId: runTest
+      summary: Run a test
+      description: Executes a test suite against the API and returns results.
+      tags:
+        - Tests
+      parameters:
+        - $ref: '#/components/parameters/ProjectId'
+        - $ref: '#/components/parameters/ApiId'
+        - $ref: '#/components/parameters/TestId'
+      responses:
+        '200':
+          description: Test results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRun'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /users/me:
+    get:
+      operationId: getCurrentUser
+      summary: Get current user
+      description: Returns the profile of the authenticated user.
+      tags:
+        - Users
+      responses:
+        '200':
+          description: The current user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    put:
+      operationId: updateCurrentUser
+      summary: Update current user
+      description: Updates the profile of the authenticated user.
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '200':
+          description: User updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
+  /users/me/tokens:
+    get:
+      operationId: listTokens
+      summary: List API tokens
+      description: Returns all API tokens for the authenticated user.
+      tags:
+        - Tokens
+      responses:
+        '200':
+          description: A list of tokens.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Token'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createToken
+      summary: Create an API token
+      description: >-
+        Creates a new API token. The token value is returned only once in the
+        response and cannot be retrieved again.
+      tags:
+        - Tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenInput'
+      responses:
+        '201':
+          description: Token created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenCreated'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+
+  /users/me/tokens/{tokenId}:
+    delete:
+      operationId: deleteToken
+      summary: Revoke an API token
+      description: Revokes and deletes an API token.
+      tags:
+        - Tokens
+      parameters:
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Token revoked.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+  parameters:
+    ProjectId:
+      name: projectId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ApiId:
+      name: apiId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    EndpointId:
+      name: endpointId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    SchemaId:
+      name: schemaId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ConnectorId:
+      name: connectorId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    DeploymentId:
+      name: deploymentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    TestId:
+      name: testId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        default: 20
+        maximum: 100
+    Offset:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+
+  schemas:
+
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum:
+            - active
+            - archived
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - name
+        - status
+        - createdAt
+        - updatedAt
+
+    ProjectInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+      required:
+        - name
+
+    Api:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        version:
+          type: string
+        generationSource:
+          type: string
+          enum:
+            - prompt
+            - spec
+            - manual
+        status:
+          type: string
+          enum:
+            - draft
+            - generated
+            - published
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - projectId
+        - name
+        - version
+        - status
+        - createdAt
+        - updatedAt
+
+    ApiInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+        version:
+          type: string
+        prompt:
+          type: string
+          description: Natural language prompt for AI-powered API generation.
+        specUrl:
+          type: string
+          format: uri
+          description: URL to an existing OpenAPI specification to import.
+      required:
+        - name
+
+    Endpoint:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        apiId:
+          type: string
+          format: uuid
+        path:
+          type: string
+        method:
+          type: string
+          enum:
+            - GET
+            - POST
+            - PUT
+            - PATCH
+            - DELETE
+        summary:
+          type: string
+        description:
+          type: string
+        requestSchema:
+          type: object
+        responseSchema:
+          type: object
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - apiId
+        - path
+        - method
+        - createdAt
+        - updatedAt
+
+    EndpointInput:
+      type: object
+      properties:
+        path:
+          type: string
+        method:
+          type: string
+          enum:
+            - GET
+            - POST
+            - PUT
+            - PATCH
+            - DELETE
+        summary:
+          type: string
+        description:
+          type: string
+        requestSchema:
+          type: object
+        responseSchema:
+          type: object
+      required:
+        - path
+        - method
+
+    Schema:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        apiId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        definition:
+          type: object
+          description: The JSON Schema definition.
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - apiId
+        - name
+        - definition
+        - createdAt
+        - updatedAt
+
+    SchemaInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+        definition:
+          type: object
+      required:
+        - name
+        - definition
+
+    Connector:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        projectId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+            - database
+            - rest-api
+            - graphql
+            - file-store
+            - message-queue
+        status:
+          type: string
+          enum:
+            - connected
+            - disconnected
+            - error
+        config:
+          type: object
+          description: Connector-specific configuration (credentials are masked).
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - projectId
+        - name
+        - type
+        - status
+        - createdAt
+        - updatedAt
+
+    ConnectorInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        type:
+          type: string
+          enum:
+            - database
+            - rest-api
+            - graphql
+            - file-store
+            - message-queue
+        config:
+          type: object
+      required:
+        - name
+        - type
+        - config
+
+    Deployment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        apiId:
+          type: string
+          format: uuid
+        environment:
+          type: string
+          enum:
+            - development
+            - staging
+            - production
+        status:
+          type: string
+          enum:
+            - pending
+            - in_progress
+            - deployed
+            - failed
+            - torn_down
+        url:
+          type: string
+          format: uri
+          description: The live URL of the deployed API.
+        version:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - apiId
+        - environment
+        - status
+        - createdAt
+        - updatedAt
+
+    DeploymentInput:
+      type: object
+      properties:
+        environment:
+          type: string
+          enum:
+            - development
+            - staging
+            - production
+        version:
+          type: string
+      required:
+        - environment
+
+    Test:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        apiId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          enum:
+            - unit
+            - integration
+            - contract
+            - load
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCase'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - apiId
+        - name
+        - type
+        - createdAt
+        - updatedAt
+
+    TestInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+        type:
+          type: string
+          enum:
+            - unit
+            - integration
+            - contract
+            - load
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCase'
+      required:
+        - name
+        - type
+
+    TestCase:
+      type: object
+      properties:
+        name:
+          type: string
+        endpointId:
+          type: string
+          format: uuid
+        request:
+          type: object
+          properties:
+            method:
+              type: string
+            path:
+              type: string
+            headers:
+              type: object
+            body:
+              type: object
+        expectedResponse:
+          type: object
+          properties:
+            statusCode:
+              type: integer
+            body:
+              type: object
+
+    TestRun:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        testId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+            - passed
+            - failed
+            - error
+        totalCases:
+          type: integer
+        passedCases:
+          type: integer
+        failedCases:
+          type: integer
+        duration:
+          type: number
+          description: Duration in milliseconds.
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              caseName:
+                type: string
+              status:
+                type: string
+                enum:
+                  - passed
+                  - failed
+                  - error
+              message:
+                type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        organization:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - email
+        - name
+        - createdAt
+        - updatedAt
+
+    UserInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        organization:
+          type: string
+
+    Token:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        prefix:
+          type: string
+          description: First few characters of the token for identification.
+        scopes:
+          type: array
+          items:
+            type: string
+        expiresAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - name
+        - prefix
+        - createdAt
+
+    TokenInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        scopes:
+          type: array
+          items:
+            type: string
+            enum:
+              - read
+              - write
+              - admin
+        expiresAt:
+          type: string
+          format: date-time
+      required:
+        - name
+
+    TokenCreated:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        token:
+          type: string
+          description: >-
+            The full token value. This is only returned once at creation time.
+        scopes:
+          type: array
+          items:
+            type: string
+        expiresAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                  message:
+                    type: string
+
+  responses:
+    Unauthorized:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+security:
+  - bearerAuth: []
+  - apiKey: []
+
+tags:
+  - name: Projects
+    description: Manage API generation projects.
+  - name: APIs
+    description: Create, configure, and manage APIs within projects.
+  - name: Endpoints
+    description: Define and manage API endpoints.
+  - name: Schemas
+    description: Define data schemas for APIs.
+  - name: Connectors
+    description: Configure connections to external data sources.
+  - name: Deployments
+    description: Deploy APIs to target environments.
+  - name: Tests
+    description: Create and run automated API tests.
+  - name: Users
+    description: Manage user profiles.
+  - name: Tokens
+    description: Manage API authentication tokens.

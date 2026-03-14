@@ -1,0 +1,75 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "apigen": "https://api.apigen.com/vocab#",
+    "id": "@id",
+    "type": "@type",
+    "Project": "apigen:Project",
+    "Api": "apigen:Api",
+    "Endpoint": "apigen:Endpoint",
+    "Schema": "apigen:Schema",
+    "Connector": "apigen:Connector",
+    "Deployment": "apigen:Deployment",
+    "Test": "apigen:Test",
+    "TestRun": "apigen:TestRun",
+    "User": "Person",
+    "Token": "apigen:Token",
+    "name": "name",
+    "description": "description",
+    "url": "url",
+    "version": "softwareVersion",
+    "status": "apigen:status",
+    "environment": "apigen:environment",
+    "method": "apigen:httpMethod",
+    "path": "apigen:urlPath",
+    "projectId": {
+      "@id": "apigen:project",
+      "@type": "@id"
+    },
+    "apiId": {
+      "@id": "apigen:api",
+      "@type": "@id"
+    },
+    "endpointId": {
+      "@id": "apigen:endpoint",
+      "@type": "@id"
+    },
+    "connectorId": {
+      "@id": "apigen:connector",
+      "@type": "@id"
+    },
+    "ownerId": {
+      "@id": "apigen:owner",
+      "@type": "@id"
+    },
+    "deployedBy": {
+      "@id": "apigen:deployedBy",
+      "@type": "@id"
+    },
+    "generationSource": "apigen:generationSource",
+    "prompt": "apigen:prompt",
+    "specUrl": {
+      "@id": "apigen:specUrl",
+      "@type": "@id"
+    },
+    "requestSchema": "apigen:requestSchema",
+    "responseSchema": "apigen:responseSchema",
+    "region": "apigen:region",
+    "replicas": "apigen:replicas",
+    "scopes": "apigen:scopes",
+    "email": "email",
+    "organization": "memberOf",
+    "createdAt": {
+      "@id": "dateCreated",
+      "@type": "DateTime"
+    },
+    "updatedAt": {
+      "@id": "dateModified",
+      "@type": "DateTime"
+    },
+    "expiresAt": {
+      "@id": "expires",
+      "@type": "DateTime"
+    }
+  }
+}
