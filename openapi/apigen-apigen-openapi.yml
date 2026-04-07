@@ -138,8 +138,7 @@ paths:
       operationId: listApis
       summary: APIGen List APIs in a project
       description: Returns all APIs belonging to a project.
-      tags:
-        - APIs
+      tags: []
       parameters:
         - $ref: '#/components/parameters/ProjectId'
         - $ref: '#/components/parameters/Limit'
@@ -166,8 +165,7 @@ paths:
       description: >-
         Creates a new API within a project. You can provide a prompt for
         AI-powered generation or supply an existing OpenAPI specification.
-      tags:
-        - APIs
+      tags: []
       parameters:
         - $ref: '#/components/parameters/ProjectId'
       requestBody:
@@ -193,8 +191,7 @@ paths:
       operationId: getApi
       summary: APIGen Get an API
       description: Returns a single API by ID.
-      tags:
-        - APIs
+      tags: []
       parameters:
         - $ref: '#/components/parameters/ProjectId'
         - $ref: '#/components/parameters/ApiId'
@@ -213,8 +210,7 @@ paths:
       operationId: updateApi
       summary: APIGen Update an API
       description: Updates an existing API definition.
-      tags:
-        - APIs
+      tags: []
       parameters:
         - $ref: '#/components/parameters/ProjectId'
         - $ref: '#/components/parameters/ApiId'
@@ -241,8 +237,7 @@ paths:
       operationId: deleteApi
       summary: APIGen Delete an API
       description: Deletes an API and its endpoints.
-      tags:
-        - APIs
+      tags: []
       parameters:
         - $ref: '#/components/parameters/ProjectId'
         - $ref: '#/components/parameters/ApiId'
@@ -1643,21 +1638,19 @@ security:
   - apiKey: []
 
 tags:
-  - name: Projects
-    description: Manage API generation projects.
-  - name: APIs
-    description: Create, configure, and manage APIs within projects.
-  - name: Endpoints
-    description: Define and manage API endpoints.
-  - name: Schemas
-    description: Define data schemas for APIs.
   - name: Connectors
     description: Configure connections to external data sources.
   - name: Deployments
     description: Deploy APIs to target environments.
+  - name: Endpoints
+    description: Define and manage API endpoints.
+  - name: Projects
+    description: Manage API generation projects.
+  - name: Schemas
+    description: Define data schemas for APIs.
   - name: Tests
     description: Create and run automated API tests.
-  - name: Users
-    description: Manage user profiles.
   - name: Tokens
     description: Manage API authentication tokens.
+  - name: Users
+    description: Manage user profiles.

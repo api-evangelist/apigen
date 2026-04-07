@@ -4,8 +4,7 @@ url: >-
 apis:
   - aid: apigen:apigen
     name: APIGen
-    tags:
-      - API
+    tags: []
     humanURL: https://www.apigen.com/
     properties:
       - url: https://www.apigen.com/
@@ -27,13 +26,13 @@ apis:
       design, build, test and deploy your APIs from a prompt or spec.
 name: APIGen
 tags:
+  - Code
+  - Data Structures
   - Definitions
+  - Documentation
   - Generation
   - Schema
-  - Data Structures
-  - Code
   - SDKs
-  - Documentation
   - Tests
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
