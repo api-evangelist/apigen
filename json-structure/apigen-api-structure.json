@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://api.apigen.com/schemas/api.json",
+  "description": "An API definition within a project, including its generation source and lifecycle status.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the API."
+    },
+    "projectId": {
+      "type": "string",
+      "description": "ID of the parent project."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "description": "Human-readable name of the API."
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of what the API does."
+    },
+    "version": {
+      "type": "string",
+      "description": "Semantic version of the API."
+    },
+    "generationSource": {
+      "type": "string",
+      "enum": [
+        "prompt",
+        "spec",
+        "manual"
+      ],
+      "description": "How the API was created: from a natural language prompt, an imported spec, or manually."
+    },
+    "prompt": {
+      "type": "string",
+      "description": "The natural language prompt used to generate the API, if applicable."
+    },
+    "specUrl": {
+      "type": "string",
+      "description": "URL to the imported OpenAPI specification, if applicable."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "generated",
+        "published"
+      ],
+      "description": "Current lifecycle status of the API."
+    },
+    "endpointCount": {
+      "type": "int32",
+      "minimum": 0,
+      "description": "Number of endpoints defined in this API."
+    },
+    "schemaCount": {
+      "type": "int32",
+      "minimum": 0,
+      "description": "Number of schemas defined in this API."
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags for categorizing the API."
+    },
+    "createdAt": {
+      "type": "datetime",
+      "description": "Timestamp when the API was created."
+    },
+    "updatedAt": {
+      "type": "datetime",
+      "description": "Timestamp when the API was last updated."
+    }
+  },
+  "required": [
+    "id",
+    "projectId",
+    "name",
+    "version",
+    "status",
+    "createdAt",
+    "updatedAt"
+  ],
+  "additionalProperties": false,
+  "name": "APIGen API"
+}

@@ -1,0 +1,111 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: "APIGen"
+  description: "Vocabulary for APIGen PHP API documentation generator covering projects, APIs, endpoints, and deployments."
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+operational:
+  apis:
+    - name: APIGen API
+      namespace: apigen
+      version: "1.0.0"
+      baseUrl: https://api.apigen.com/v1
+      status: active
+
+  resources:
+    - name: projects
+      apis: [apigen]
+      actions: [list, get, create, update, delete]
+    - name: apis
+      apis: [apigen]
+      actions: [list, get, create, update, delete]
+    - name: endpoints
+      apis: [apigen]
+      actions: [list, get, create, update, delete]
+    - name: deployments
+      apis: [apigen]
+      actions: [list, get, create]
+
+  actions:
+    - name: list
+      http_method: GET
+      pattern: read
+    - name: get
+      http_method: GET
+      pattern: read
+    - name: create
+      http_method: POST
+      pattern: write
+    - name: update
+      http_method: PUT
+      pattern: write
+    - name: delete
+      http_method: DELETE
+      pattern: destructive
+
+  schemas:
+    core:
+      - name: Project
+        description: An APIGen documentation project.
+      - name: API
+        description: An API definition within a project.
+      - name: Endpoint
+        description: An API endpoint definition.
+      - name: Deployment
+        description: A documentation deployment to an environment.
+
+  authentication:
+    schemes:
+      - name: bearerAuth
+        type: bearer
+
+capability:
+  workflows:
+    - name: API Documentation Generation
+      file: capabilities/api-documentation-generation.yaml
+      apis_combined: [APIGen API]
+      tool_count: 3
+      personas: [PHP Developer, Technical Writer]
+
+  personas:
+    - id: php-developer
+      name: PHP Developer
+      description: Developer generating API documentation for PHP projects using ApiGen.
+      workflows: [API Documentation Generation]
+    - id: technical-writer
+      name: Technical Writer
+      description: Writer managing and publishing API documentation sites.
+      workflows: [API Documentation Generation]
+
+  domains:
+    - name: API Documentation
+      resources: [projects, apis, endpoints, deployments]
+      workflows: [API Documentation Generation]
+
+  namespaces:
+    - name: apigen
+      type: consumed
+      baseUri: https://api.apigen.com/v1
+    - name: apigen-docs-api
+      type: rest-exposed
+      port: 8080
+    - name: apigen-docs-mcp
+      type: mcp-exposed
+      port: 9090
+
+  binds:
+    - name: APIGEN_API_TOKEN
+      description: APIGen API token for authentication.
+      workflows: [API Documentation Generation]
+
+crossReference:
+  - resource: projects
+    operations: [listProjects, getProject, createProject]
+    workflows: [API Documentation Generation]
+    personas: [PHP Developer, Technical Writer]
+  - resource: deployments
+    operations: [deployProject]
+    workflows: [API Documentation Generation]
+    personas: [PHP Developer, Technical Writer]

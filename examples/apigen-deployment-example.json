@@ -1,0 +1,7 @@
+{
+  "id": "dep-001",
+  "projectId": "proj-001",
+  "environment": "production",
+  "status": "success",
+  "url": "https://docs.example.com"
+}

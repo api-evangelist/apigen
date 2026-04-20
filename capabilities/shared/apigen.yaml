@@ -1,0 +1,140 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "APIGen API"
+  description: "APIGen API for managing PHP API documentation generation projects, endpoints, schemas, and deployments."
+  tags:
+    - APIGen
+    - Documentation
+    - PHP
+    - Code Generation
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      APIGEN_API_TOKEN: APIGEN_API_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: apigen
+      baseUri: https://api.apigen.com/v1
+      description: "APIGen REST API for documentation generation."
+      authentication:
+        type: bearer
+        token: "{{APIGEN_API_TOKEN}}"
+      resources:
+        - name: projects
+          path: /projects
+          description: "Manage APIGen projects."
+          operations:
+            - name: list-projects
+              method: GET
+              description: "List all projects."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-project
+              method: POST
+              description: "Create a new project."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-project
+              method: GET
+              description: "Get project details."
+              inputParameters:
+                - name: projectId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Project ID."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: apis
+          path: /projects/{projectId}/apis
+          description: "Manage APIs within a project."
+          operations:
+            - name: list-apis
+              method: GET
+              description: "List APIs in a project."
+              inputParameters:
+                - name: projectId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Project ID."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: deployments
+          path: /projects/{projectId}/deployments
+          description: "Deploy API documentation."
+          operations:
+            - name: deploy
+              method: POST
+              description: "Deploy documentation for a project."
+              inputParameters:
+                - name: projectId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Project ID."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: apigen-rest
+      resources:
+        - path: /v1/projects
+          name: projects
+          operations:
+            - method: GET
+              name: list-projects
+              description: "List projects."
+              call: "apigen.list-projects"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+    - type: mcp
+      port: 9100
+      namespace: apigen-mcp
+      transport: http
+      tools:
+        - name: list-projects
+          description: "List all APIGen documentation projects."
+          hints: {readOnly: true, destructive: false, idempotent: true}
+          call: "apigen.list-projects"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-project
+          description: "Create a new APIGen documentation project."
+          hints: {readOnly: false, destructive: false, idempotent: false}
+          call: "apigen.create-project"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: deploy-docs
+          description: "Deploy API documentation for a project to a target environment."
+          hints: {readOnly: false, destructive: false, idempotent: false}
+          call: "apigen.deploy"
+          outputParameters:
+            - type: object
+              mapping: "$."

@@ -16,20 +16,20 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
 servers:
-  - url: https://api.apigen.com/v1
-    description: Production
+- url: https://api.apigen.com/v1
+  description: Production
 paths:
 
   /projects:
     get:
       operationId: listProjects
-      summary: APIGen List projects
+      summary: APIGen List Projects
       description: Returns a paginated list of projects for the authenticated user.
       tags:
-        - Projects
+      - Projects
       parameters:
-        - $ref: '#/components/parameters/Limit'
-        - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
       responses:
         '200':
           description: A list of projects.
@@ -48,10 +48,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createProject
-      summary: APIGen Create a project
+      summary: APIGen Create a Project
       description: Creates a new API generation project.
       tags:
-        - Projects
+      - Projects
       requestBody:
         required: true
         content:
@@ -73,12 +73,12 @@ paths:
   /projects/{projectId}:
     get:
       operationId: getProject
-      summary: APIGen Get a project
+      summary: APIGen Get a Project
       description: Returns a single project by ID.
       tags:
-        - Projects
+      - Projects
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ProjectId'
       responses:
         '200':
           description: A project.
@@ -92,12 +92,12 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateProject
-      summary: APIGen Update a project
+      summary: APIGen Update a Project
       description: Updates an existing project.
       tags:
-        - Projects
+      - Projects
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ProjectId'
       requestBody:
         required: true
         content:
@@ -119,12 +119,12 @@ paths:
           $ref: '#/components/responses/ValidationError'
     delete:
       operationId: deleteProject
-      summary: APIGen Delete a project
+      summary: APIGen Delete a Project
       description: Deletes a project and all associated resources.
       tags:
-        - Projects
+      - Projects
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ProjectId'
       responses:
         '204':
           description: Project deleted.
@@ -136,13 +136,13 @@ paths:
   /projects/{projectId}/apis:
     get:
       operationId: listApis
-      summary: APIGen List APIs in a project
+      summary: APIGen List APIs in a Project
       description: Returns all APIs belonging to a project.
       tags: []
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/Limit'
-        - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
       responses:
         '200':
           description: A list of APIs.
@@ -167,7 +167,7 @@ paths:
         AI-powered generation or supply an existing OpenAPI specification.
       tags: []
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ProjectId'
       requestBody:
         required: true
         content:
@@ -193,8 +193,8 @@ paths:
       description: Returns a single API by ID.
       tags: []
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
       responses:
         '200':
           description: An API.
@@ -212,8 +212,8 @@ paths:
       description: Updates an existing API definition.
       tags: []
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
       requestBody:
         required: true
         content:
@@ -239,8 +239,8 @@ paths:
       description: Deletes an API and its endpoints.
       tags: []
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
       responses:
         '204':
           description: API deleted.
@@ -252,15 +252,15 @@ paths:
   /projects/{projectId}/apis/{apiId}/endpoints:
     get:
       operationId: listEndpoints
-      summary: APIGen List endpoints
+      summary: APIGen List Endpoints
       description: Returns all endpoints for an API.
       tags:
-        - Endpoints
+      - Endpoints
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
-        - $ref: '#/components/parameters/Limit'
-        - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
       responses:
         '200':
           description: A list of endpoints.
@@ -279,13 +279,13 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createEndpoint
-      summary: APIGen Create an endpoint
+      summary: APIGen Create an Endpoint
       description: Creates a new endpoint for an API.
       tags:
-        - Endpoints
+      - Endpoints
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
       requestBody:
         required: true
         content:
@@ -307,14 +307,14 @@ paths:
   /projects/{projectId}/apis/{apiId}/endpoints/{endpointId}:
     get:
       operationId: getEndpoint
-      summary: APIGen Get an endpoint
+      summary: APIGen Get an Endpoint
       description: Returns a single endpoint by ID.
       tags:
-        - Endpoints
+      - Endpoints
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
-        - $ref: '#/components/parameters/EndpointId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/EndpointId'
       responses:
         '200':
           description: An endpoint.
@@ -328,14 +328,14 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateEndpoint
-      summary: APIGen Update an endpoint
+      summary: APIGen Update an Endpoint
       description: Updates an existing endpoint.
       tags:
-        - Endpoints
+      - Endpoints
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
-        - $ref: '#/components/parameters/EndpointId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/EndpointId'
       requestBody:
         required: true
         content:
@@ -357,14 +357,14 @@ paths:
           $ref: '#/components/responses/ValidationError'
     delete:
       operationId: deleteEndpoint
-      summary: APIGen Delete an endpoint
+      summary: APIGen Delete an Endpoint
       description: Deletes an endpoint.
       tags:
-        - Endpoints
+      - Endpoints
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
-        - $ref: '#/components/parameters/EndpointId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/EndpointId'
       responses:
         '204':
           description: Endpoint deleted.
@@ -376,15 +376,15 @@ paths:
   /projects/{projectId}/apis/{apiId}/schemas:
     get:
       operationId: listSchemas
-      summary: APIGen List schemas
+      summary: APIGen List Schemas
       description: Returns all schemas defined for an API.
       tags:
-        - Schemas
+      - Schemas
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
-        - $ref: '#/components/parameters/Limit'
-        - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
       responses:
         '200':
           description: A list of schemas.
@@ -403,13 +403,13 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createSchema
-      summary: APIGen Create a schema
+      summary: APIGen Create a Schema
       description: Creates a new data schema for an API.
       tags:
-        - Schemas
+      - Schemas
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
       requestBody:
         required: true
         content:
@@ -431,14 +431,14 @@ paths:
   /projects/{projectId}/apis/{apiId}/schemas/{schemaId}:
     get:
       operationId: getSchema
-      summary: APIGen Get a schema
+      summary: APIGen Get a Schema
       description: Returns a single schema by ID.
       tags:
-        - Schemas
+      - Schemas
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
-        - $ref: '#/components/parameters/SchemaId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/SchemaId'
       responses:
         '200':
           description: A schema.
@@ -452,14 +452,14 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateSchema
-      summary: APIGen Update a schema
+      summary: APIGen Update a Schema
       description: Updates an existing schema definition.
       tags:
-        - Schemas
+      - Schemas
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
-        - $ref: '#/components/parameters/SchemaId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/SchemaId'
       requestBody:
         required: true
         content:
@@ -481,14 +481,14 @@ paths:
           $ref: '#/components/responses/ValidationError'
     delete:
       operationId: deleteSchema
-      summary: APIGen Delete a schema
+      summary: APIGen Delete a Schema
       description: Deletes a schema.
       tags:
-        - Schemas
+      - Schemas
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
-        - $ref: '#/components/parameters/SchemaId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/SchemaId'
       responses:
         '204':
           description: Schema deleted.
@@ -500,14 +500,14 @@ paths:
   /projects/{projectId}/connectors:
     get:
       operationId: listConnectors
-      summary: APIGen List connectors
+      summary: APIGen List Connectors
       description: Returns all connectors configured for a project.
       tags:
-        - Connectors
+      - Connectors
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/Limit'
-        - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
       responses:
         '200':
           description: A list of connectors.
@@ -526,14 +526,14 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createConnector
-      summary: APIGen Create a connector
+      summary: APIGen Create a Connector
       description: >-
         Creates a new connector to an external data source such as a database,
         third-party API, or file store.
       tags:
-        - Connectors
+      - Connectors
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ProjectId'
       requestBody:
         required: true
         content:
@@ -555,13 +555,13 @@ paths:
   /projects/{projectId}/connectors/{connectorId}:
     get:
       operationId: getConnector
-      summary: APIGen Get a connector
+      summary: APIGen Get a Connector
       description: Returns a single connector by ID.
       tags:
-        - Connectors
+      - Connectors
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ConnectorId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ConnectorId'
       responses:
         '200':
           description: A connector.
@@ -575,13 +575,13 @@ paths:
           $ref: '#/components/responses/NotFound'
     put:
       operationId: updateConnector
-      summary: APIGen Update a connector
+      summary: APIGen Update a Connector
       description: Updates an existing connector configuration.
       tags:
-        - Connectors
+      - Connectors
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ConnectorId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ConnectorId'
       requestBody:
         required: true
         content:
@@ -603,13 +603,13 @@ paths:
           $ref: '#/components/responses/ValidationError'
     delete:
       operationId: deleteConnector
-      summary: APIGen Delete a connector
+      summary: APIGen Delete a Connector
       description: Deletes a connector.
       tags:
-        - Connectors
+      - Connectors
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ConnectorId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ConnectorId'
       responses:
         '204':
           description: Connector deleted.
@@ -621,15 +621,15 @@ paths:
   /projects/{projectId}/apis/{apiId}/deployments:
     get:
       operationId: listDeployments
-      summary: APIGen List deployments
+      summary: APIGen List Deployments
       description: Returns all deployments for an API.
       tags:
-        - Deployments
+      - Deployments
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
-        - $ref: '#/components/parameters/Limit'
-        - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
       responses:
         '200':
           description: A list of deployments.
@@ -648,13 +648,13 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createDeployment
-      summary: APIGen Create a deployment
+      summary: APIGen Create a Deployment
       description: Deploys an API to a target environment.
       tags:
-        - Deployments
+      - Deployments
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
       requestBody:
         required: true
         content:
@@ -676,14 +676,14 @@ paths:
   /projects/{projectId}/apis/{apiId}/deployments/{deploymentId}:
     get:
       operationId: getDeployment
-      summary: APIGen Get a deployment
+      summary: APIGen Get a Deployment
       description: Returns a single deployment by ID including its current status.
       tags:
-        - Deployments
+      - Deployments
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
-        - $ref: '#/components/parameters/DeploymentId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/DeploymentId'
       responses:
         '200':
           description: A deployment.
@@ -697,14 +697,14 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteDeployment
-      summary: APIGen Tear down a deployment
+      summary: APIGen Tear Down a Deployment
       description: Tears down a deployment and removes the API from the target environment.
       tags:
-        - Deployments
+      - Deployments
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
-        - $ref: '#/components/parameters/DeploymentId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/DeploymentId'
       responses:
         '204':
           description: Deployment torn down.
@@ -716,15 +716,15 @@ paths:
   /projects/{projectId}/apis/{apiId}/tests:
     get:
       operationId: listTests
-      summary: APIGen List tests
+      summary: APIGen List Tests
       description: Returns all test suites for an API.
       tags:
-        - Tests
+      - Tests
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
-        - $ref: '#/components/parameters/Limit'
-        - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
       responses:
         '200':
           description: A list of tests.
@@ -743,13 +743,13 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createTest
-      summary: APIGen Create a test
+      summary: APIGen Create a Test
       description: Creates a new test suite for an API.
       tags:
-        - Tests
+      - Tests
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
       requestBody:
         required: true
         content:
@@ -771,14 +771,14 @@ paths:
   /projects/{projectId}/apis/{apiId}/tests/{testId}:
     get:
       operationId: getTest
-      summary: APIGen Get a test
+      summary: APIGen Get a Test
       description: Returns a single test suite by ID.
       tags:
-        - Tests
+      - Tests
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
-        - $ref: '#/components/parameters/TestId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/TestId'
       responses:
         '200':
           description: A test.
@@ -792,14 +792,14 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteTest
-      summary: APIGen Delete a test
+      summary: APIGen Delete a Test
       description: Deletes a test suite.
       tags:
-        - Tests
+      - Tests
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
-        - $ref: '#/components/parameters/TestId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/TestId'
       responses:
         '204':
           description: Test deleted.
@@ -811,14 +811,14 @@ paths:
   /projects/{projectId}/apis/{apiId}/tests/{testId}/run:
     post:
       operationId: runTest
-      summary: APIGen Run a test
+      summary: APIGen Run a Test
       description: Executes a test suite against the API and returns results.
       tags:
-        - Tests
+      - Tests
       parameters:
-        - $ref: '#/components/parameters/ProjectId'
-        - $ref: '#/components/parameters/ApiId'
-        - $ref: '#/components/parameters/TestId'
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/TestId'
       responses:
         '200':
           description: Test results.
@@ -834,10 +834,10 @@ paths:
   /users/me:
     get:
       operationId: getCurrentUser
-      summary: APIGen Get current user
+      summary: APIGen Get Current User
       description: Returns the profile of the authenticated user.
       tags:
-        - Users
+      - Users
       responses:
         '200':
           description: The current user.
@@ -849,10 +849,10 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     put:
       operationId: updateCurrentUser
-      summary: APIGen Update current user
+      summary: APIGen Update Current User
       description: Updates the profile of the authenticated user.
       tags:
-        - Users
+      - Users
       requestBody:
         required: true
         content:
@@ -874,10 +874,10 @@ paths:
   /users/me/tokens:
     get:
       operationId: listTokens
-      summary: APIGen List API tokens
+      summary: APIGen List API Tokens
       description: Returns all API tokens for the authenticated user.
       tags:
-        - Tokens
+      - Tokens
       responses:
         '200':
           description: A list of tokens.
@@ -894,12 +894,12 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createToken
-      summary: APIGen Create an API token
+      summary: APIGen Create an API Token
       description: >-
         Creates a new API token. The token value is returned only once in the
         response and cannot be retrieved again.
       tags:
-        - Tokens
+      - Tokens
       requestBody:
         required: true
         content:
@@ -921,17 +921,17 @@ paths:
   /users/me/tokens/{tokenId}:
     delete:
       operationId: deleteToken
-      summary: APIGen Revoke an API token
+      summary: APIGen Revoke an API Token
       description: Revokes and deletes an API token.
       tags:
-        - Tokens
+      - Tokens
       parameters:
-        - name: tokenId
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
+      - name: tokenId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
       responses:
         '204':
           description: Token revoked.
@@ -1031,8 +1031,8 @@ components:
         status:
           type: string
           enum:
-            - active
-            - archived
+          - active
+          - archived
         createdAt:
           type: string
           format: date-time
@@ -1040,11 +1040,11 @@ components:
           type: string
           format: date-time
       required:
-        - id
-        - name
-        - status
-        - createdAt
-        - updatedAt
+      - id
+      - name
+      - status
+      - createdAt
+      - updatedAt
 
     ProjectInput:
       type: object
@@ -1056,7 +1056,7 @@ components:
         description:
           type: string
       required:
-        - name
+      - name
 
     Api:
       type: object
@@ -1076,15 +1076,15 @@ components:
         generationSource:
           type: string
           enum:
-            - prompt
-            - spec
-            - manual
+          - prompt
+          - spec
+          - manual
         status:
           type: string
           enum:
-            - draft
-            - generated
-            - published
+          - draft
+          - generated
+          - published
         createdAt:
           type: string
           format: date-time
@@ -1092,13 +1092,13 @@ components:
           type: string
           format: date-time
       required:
-        - id
-        - projectId
-        - name
-        - version
-        - status
-        - createdAt
-        - updatedAt
+      - id
+      - projectId
+      - name
+      - version
+      - status
+      - createdAt
+      - updatedAt
 
     ApiInput:
       type: object
@@ -1119,7 +1119,7 @@ components:
           format: uri
           description: URL to an existing OpenAPI specification to import.
       required:
-        - name
+      - name
 
     Endpoint:
       type: object
@@ -1135,11 +1135,11 @@ components:
         method:
           type: string
           enum:
-            - GET
-            - POST
-            - PUT
-            - PATCH
-            - DELETE
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
         summary:
           type: string
         description:
@@ -1155,12 +1155,12 @@ components:
           type: string
           format: date-time
       required:
-        - id
-        - apiId
-        - path
-        - method
-        - createdAt
-        - updatedAt
+      - id
+      - apiId
+      - path
+      - method
+      - createdAt
+      - updatedAt
 
     EndpointInput:
       type: object
@@ -1170,11 +1170,11 @@ components:
         method:
           type: string
           enum:
-            - GET
-            - POST
-            - PUT
-            - PATCH
-            - DELETE
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
         summary:
           type: string
         description:
@@ -1184,8 +1184,8 @@ components:
         responseSchema:
           type: object
       required:
-        - path
-        - method
+      - path
+      - method
 
     Schema:
       type: object
@@ -1210,12 +1210,12 @@ components:
           type: string
           format: date-time
       required:
-        - id
-        - apiId
-        - name
-        - definition
-        - createdAt
-        - updatedAt
+      - id
+      - apiId
+      - name
+      - definition
+      - createdAt
+      - updatedAt
 
     SchemaInput:
       type: object
@@ -1229,8 +1229,8 @@ components:
         definition:
           type: object
       required:
-        - name
-        - definition
+      - name
+      - definition
 
     Connector:
       type: object
@@ -1246,17 +1246,17 @@ components:
         type:
           type: string
           enum:
-            - database
-            - rest-api
-            - graphql
-            - file-store
-            - message-queue
+          - database
+          - rest-api
+          - graphql
+          - file-store
+          - message-queue
         status:
           type: string
           enum:
-            - connected
-            - disconnected
-            - error
+          - connected
+          - disconnected
+          - error
         config:
           type: object
           description: Connector-specific configuration (credentials are masked).
@@ -1267,13 +1267,13 @@ components:
           type: string
           format: date-time
       required:
-        - id
-        - projectId
-        - name
-        - type
-        - status
-        - createdAt
-        - updatedAt
+      - id
+      - projectId
+      - name
+      - type
+      - status
+      - createdAt
+      - updatedAt
 
     ConnectorInput:
       type: object
@@ -1285,17 +1285,17 @@ components:
         type:
           type: string
           enum:
-            - database
-            - rest-api
-            - graphql
-            - file-store
-            - message-queue
+          - database
+          - rest-api
+          - graphql
+          - file-store
+          - message-queue
         config:
           type: object
       required:
-        - name
-        - type
-        - config
+      - name
+      - type
+      - config
 
     Deployment:
       type: object
@@ -1309,17 +1309,17 @@ components:
         environment:
           type: string
           enum:
-            - development
-            - staging
-            - production
+          - development
+          - staging
+          - production
         status:
           type: string
           enum:
-            - pending
-            - in_progress
-            - deployed
-            - failed
-            - torn_down
+          - pending
+          - in_progress
+          - deployed
+          - failed
+          - torn_down
         url:
           type: string
           format: uri
@@ -1333,12 +1333,12 @@ components:
           type: string
           format: date-time
       required:
-        - id
-        - apiId
-        - environment
-        - status
-        - createdAt
-        - updatedAt
+      - id
+      - apiId
+      - environment
+      - status
+      - createdAt
+      - updatedAt
 
     DeploymentInput:
       type: object
@@ -1346,13 +1346,13 @@ components:
         environment:
           type: string
           enum:
-            - development
-            - staging
-            - production
+          - development
+          - staging
+          - production
         version:
           type: string
       required:
-        - environment
+      - environment
 
     Test:
       type: object
@@ -1370,10 +1370,10 @@ components:
         type:
           type: string
           enum:
-            - unit
-            - integration
-            - contract
-            - load
+          - unit
+          - integration
+          - contract
+          - load
         cases:
           type: array
           items:
@@ -1385,12 +1385,12 @@ components:
           type: string
           format: date-time
       required:
-        - id
-        - apiId
-        - name
-        - type
-        - createdAt
-        - updatedAt
+      - id
+      - apiId
+      - name
+      - type
+      - createdAt
+      - updatedAt
 
     TestInput:
       type: object
@@ -1404,17 +1404,17 @@ components:
         type:
           type: string
           enum:
-            - unit
-            - integration
-            - contract
-            - load
+          - unit
+          - integration
+          - contract
+          - load
         cases:
           type: array
           items:
             $ref: '#/components/schemas/TestCase'
       required:
-        - name
-        - type
+      - name
+      - type
 
     TestCase:
       type: object
@@ -1455,9 +1455,9 @@ components:
         status:
           type: string
           enum:
-            - passed
-            - failed
-            - error
+          - passed
+          - failed
+          - error
         totalCases:
           type: integer
         passedCases:
@@ -1477,9 +1477,9 @@ components:
               status:
                 type: string
                 enum:
-                  - passed
-                  - failed
-                  - error
+                - passed
+                - failed
+                - error
               message:
                 type: string
         createdAt:
@@ -1506,11 +1506,11 @@ components:
           type: string
           format: date-time
       required:
-        - id
-        - email
-        - name
-        - createdAt
-        - updatedAt
+      - id
+      - email
+      - name
+      - createdAt
+      - updatedAt
 
     UserInput:
       type: object
@@ -1544,10 +1544,10 @@ components:
           type: string
           format: date-time
       required:
-        - id
-        - name
-        - prefix
-        - createdAt
+      - id
+      - name
+      - prefix
+      - createdAt
 
     TokenInput:
       type: object
@@ -1561,14 +1561,14 @@ components:
           items:
             type: string
             enum:
-              - read
-              - write
-              - admin
+            - read
+            - write
+            - admin
         expiresAt:
           type: string
           format: date-time
       required:
-        - name
+      - name
 
     TokenCreated:
       type: object
@@ -1634,23 +1634,23 @@ components:
             $ref: '#/components/schemas/Error'
 
 security:
-  - bearerAuth: []
-  - apiKey: []
+- bearerAuth: []
+- apiKey: []
 
 tags:
-  - name: Connectors
-    description: Configure connections to external data sources.
-  - name: Deployments
-    description: Deploy APIs to target environments.
-  - name: Endpoints
-    description: Define and manage API endpoints.
-  - name: Projects
-    description: Manage API generation projects.
-  - name: Schemas
-    description: Define data schemas for APIs.
-  - name: Tests
-    description: Create and run automated API tests.
-  - name: Tokens
-    description: Manage API authentication tokens.
-  - name: Users
-    description: Manage user profiles.
+- name: Connectors
+  description: Configure connections to external data sources.
+- name: Deployments
+  description: Deploy APIs to target environments.
+- name: Endpoints
+  description: Define and manage API endpoints.
+- name: Projects
+  description: Manage API generation projects.
+- name: Schemas
+  description: Define data schemas for APIs.
+- name: Tests
+  description: Create and run automated API tests.
+- name: Tokens
+  description: Manage API authentication tokens.
+- name: Users
+  description: Manage user profiles.

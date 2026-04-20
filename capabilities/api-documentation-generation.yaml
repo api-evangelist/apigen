@@ -1,0 +1,84 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "APIGen Documentation Generation"
+  description: "Workflow for generating, publishing, and managing API documentation using APIGen - creating projects from PHP source code, configuring endpoints, and deploying documentation sites."
+  tags:
+    - APIGen
+    - Documentation
+    - PHP
+    - API Code Generation
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      APIGEN_API_TOKEN: APIGEN_API_TOKEN
+
+capability:
+  consumes:
+    - import: apigen
+      location: ./shared/apigen.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: apigen-docs-api
+      description: "Unified REST API for APIGen documentation management."
+      resources:
+        - path: /v1/projects
+          name: projects
+          operations:
+            - method: GET
+              name: list-projects
+              description: "List projects."
+              call: "apigen.list-projects"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-project
+              description: "Create project."
+              call: "apigen.create-project"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/projects/{projectId}/deploy
+          name: deploy
+          operations:
+            - method: POST
+              name: deploy
+              description: "Deploy documentation."
+              call: "apigen.deploy"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: apigen-docs-mcp
+      transport: http
+      description: "MCP server for AI-assisted API documentation generation."
+      tools:
+        - name: list-projects
+          description: "List all APIGen documentation projects."
+          hints: {readOnly: true, destructive: false, idempotent: true}
+          call: "apigen.list-projects"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-documentation-project
+          description: "Create a new PHP API documentation project in APIGen."
+          hints: {readOnly: false, destructive: false, idempotent: false}
+          call: "apigen.create-project"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: deploy-documentation-site
+          description: "Deploy an API documentation site for a project."
+          hints: {readOnly: false, destructive: false, idempotent: false}
+          call: "apigen.deploy"
+          outputParameters:
+            - type: object
+              mapping: "$."

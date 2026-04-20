@@ -1,0 +1,7 @@
+{
+  "id": "ep-001",
+  "apiId": "api-001",
+  "method": "GET",
+  "path": "/users/{id}",
+  "summary": "Get User"
+}
