@@ -1,0 +1,105 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: APIGen API — Users
+  description: 'APIGen API — Users. 2 operations. Lead operation: APIGen Get Current User. Self-contained Naftiko capability
+    covering one Apigen business surface.'
+  tags:
+  - Apigen
+  - Users
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEN_API_KEY: APIGEN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: apigen-users
+    baseUri: https://api.apigen.com/v1
+    description: APIGen API — Users business capability. Self-contained, no shared references.
+    resources:
+    - name: users-me
+      path: /users/me
+      operations:
+      - name: getcurrentuser
+        method: GET
+        description: APIGen Get Current User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatecurrentuser
+        method: PUT
+        description: APIGen Update Current User
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.APIGEN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: apigen-users-rest
+    port: 8080
+    description: REST adapter for APIGen API — Users. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/users/me
+      name: users-me
+      description: REST surface for users-me.
+      operations:
+      - method: GET
+        name: getcurrentuser
+        description: APIGen Get Current User
+        call: apigen-users.getcurrentuser
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatecurrentuser
+        description: APIGen Update Current User
+        call: apigen-users.updatecurrentuser
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: apigen-users-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for APIGen API — Users. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: apigen-get-current-user
+      description: APIGen Get Current User
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: apigen-users.getcurrentuser
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigen-update-current-user
+      description: APIGen Update Current User
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: apigen-users.updatecurrentuser
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,197 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: APIGen API — Endpoints
+  description: 'APIGen API — Endpoints. 5 operations. Lead operation: APIGen List Endpoints. Self-contained Naftiko capability
+    covering one Apigen business surface.'
+  tags:
+  - Apigen
+  - Endpoints
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEN_API_KEY: APIGEN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: apigen-endpoints
+    baseUri: https://api.apigen.com/v1
+    description: APIGen API — Endpoints business capability. Self-contained, no shared references.
+    resources:
+    - name: projects-projectId-apis-apiId-endpoints
+      path: /projects/{projectId}/apis/{apiId}/endpoints
+      operations:
+      - name: listendpoints
+        method: GET
+        description: APIGen List Endpoints
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createendpoint
+        method: POST
+        description: APIGen Create an Endpoint
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: projects-projectId-apis-apiId-endpoints-endpointId
+      path: /projects/{projectId}/apis/{apiId}/endpoints/{endpointId}
+      operations:
+      - name: getendpoint
+        method: GET
+        description: APIGen Get an Endpoint
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateendpoint
+        method: PUT
+        description: APIGen Update an Endpoint
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteendpoint
+        method: DELETE
+        description: APIGen Delete an Endpoint
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.APIGEN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: apigen-endpoints-rest
+    port: 8080
+    description: REST adapter for APIGen API — Endpoints. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/projects/{projectid}/apis/{apiid}/endpoints
+      name: projects-projectid-apis-apiid-endpoints
+      description: REST surface for projects-projectId-apis-apiId-endpoints.
+      operations:
+      - method: GET
+        name: listendpoints
+        description: APIGen List Endpoints
+        call: apigen-endpoints.listendpoints
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createendpoint
+        description: APIGen Create an Endpoint
+        call: apigen-endpoints.createendpoint
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/apis/{apiid}/endpoints/{endpointid}
+      name: projects-projectid-apis-apiid-endpoints-endpointid
+      description: REST surface for projects-projectId-apis-apiId-endpoints-endpointId.
+      operations:
+      - method: GET
+        name: getendpoint
+        description: APIGen Get an Endpoint
+        call: apigen-endpoints.getendpoint
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateendpoint
+        description: APIGen Update an Endpoint
+        call: apigen-endpoints.updateendpoint
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteendpoint
+        description: APIGen Delete an Endpoint
+        call: apigen-endpoints.deleteendpoint
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: apigen-endpoints-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for APIGen API — Endpoints. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: apigen-list-endpoints
+      description: APIGen List Endpoints
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: apigen-endpoints.listendpoints
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigen-create-endpoint
+      description: APIGen Create an Endpoint
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: apigen-endpoints.createendpoint
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigen-get-endpoint
+      description: APIGen Get an Endpoint
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: apigen-endpoints.getendpoint
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigen-update-endpoint
+      description: APIGen Update an Endpoint
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: apigen-endpoints.updateendpoint
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigen-delete-endpoint
+      description: APIGen Delete an Endpoint
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: apigen-endpoints.deleteendpoint
+      outputParameters:
+      - type: object
+        mapping: $.

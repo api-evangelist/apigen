@@ -1,0 +1,195 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: APIGen API
+  description: 'APIGen API. 5 operations. Lead operation: APIGen List APIs in a Project. Self-contained Naftiko capability
+    covering one Apigen business surface.'
+  tags:
+  - Apigen
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEN_API_KEY: APIGEN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: apigen-general
+    baseUri: https://api.apigen.com/v1
+    description: APIGen API business capability. Self-contained, no shared references.
+    resources:
+    - name: projects-projectId-apis
+      path: /projects/{projectId}/apis
+      operations:
+      - name: listapis
+        method: GET
+        description: APIGen List APIs in a Project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createapi
+        method: POST
+        description: APIGen Create an API
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: projects-projectId-apis-apiId
+      path: /projects/{projectId}/apis/{apiId}
+      operations:
+      - name: getapi
+        method: GET
+        description: APIGen Get an API
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateapi
+        method: PUT
+        description: APIGen Update an API
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteapi
+        method: DELETE
+        description: APIGen Delete an API
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.APIGEN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: apigen-general-rest
+    port: 8080
+    description: REST adapter for APIGen API. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/projects/{projectid}/apis
+      name: projects-projectid-apis
+      description: REST surface for projects-projectId-apis.
+      operations:
+      - method: GET
+        name: listapis
+        description: APIGen List APIs in a Project
+        call: apigen-general.listapis
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createapi
+        description: APIGen Create an API
+        call: apigen-general.createapi
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/apis/{apiid}
+      name: projects-projectid-apis-apiid
+      description: REST surface for projects-projectId-apis-apiId.
+      operations:
+      - method: GET
+        name: getapi
+        description: APIGen Get an API
+        call: apigen-general.getapi
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateapi
+        description: APIGen Update an API
+        call: apigen-general.updateapi
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteapi
+        description: APIGen Delete an API
+        call: apigen-general.deleteapi
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: apigen-general-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for APIGen API. One tool per consumed operation, routed inline through this capability's consumes
+      block.
+    tools:
+    - name: apigen-list-apis-project
+      description: APIGen List APIs in a Project
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: apigen-general.listapis
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigen-create-api
+      description: APIGen Create an API
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: apigen-general.createapi
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigen-get-api
+      description: APIGen Get an API
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: apigen-general.getapi
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigen-update-api
+      description: APIGen Update an API
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: apigen-general.updateapi
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigen-delete-api
+      description: APIGen Delete an API
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: apigen-general.deleteapi
+      outputParameters:
+      - type: object
+        mapping: $.

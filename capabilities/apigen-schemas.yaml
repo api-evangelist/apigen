@@ -1,0 +1,197 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: APIGen API — Schemas
+  description: 'APIGen API — Schemas. 5 operations. Lead operation: APIGen List Schemas. Self-contained Naftiko capability
+    covering one Apigen business surface.'
+  tags:
+  - Apigen
+  - Schemas
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEN_API_KEY: APIGEN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: apigen-schemas
+    baseUri: https://api.apigen.com/v1
+    description: APIGen API — Schemas business capability. Self-contained, no shared references.
+    resources:
+    - name: projects-projectId-apis-apiId-schemas
+      path: /projects/{projectId}/apis/{apiId}/schemas
+      operations:
+      - name: listschemas
+        method: GET
+        description: APIGen List Schemas
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createschema
+        method: POST
+        description: APIGen Create a Schema
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: projects-projectId-apis-apiId-schemas-schemaId
+      path: /projects/{projectId}/apis/{apiId}/schemas/{schemaId}
+      operations:
+      - name: getschema
+        method: GET
+        description: APIGen Get a Schema
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updateschema
+        method: PUT
+        description: APIGen Update a Schema
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteschema
+        method: DELETE
+        description: APIGen Delete a Schema
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.APIGEN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: apigen-schemas-rest
+    port: 8080
+    description: REST adapter for APIGen API — Schemas. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/projects/{projectid}/apis/{apiid}/schemas
+      name: projects-projectid-apis-apiid-schemas
+      description: REST surface for projects-projectId-apis-apiId-schemas.
+      operations:
+      - method: GET
+        name: listschemas
+        description: APIGen List Schemas
+        call: apigen-schemas.listschemas
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createschema
+        description: APIGen Create a Schema
+        call: apigen-schemas.createschema
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/projects/{projectid}/apis/{apiid}/schemas/{schemaid}
+      name: projects-projectid-apis-apiid-schemas-schemaid
+      description: REST surface for projects-projectId-apis-apiId-schemas-schemaId.
+      operations:
+      - method: GET
+        name: getschema
+        description: APIGen Get a Schema
+        call: apigen-schemas.getschema
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateschema
+        description: APIGen Update a Schema
+        call: apigen-schemas.updateschema
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteschema
+        description: APIGen Delete a Schema
+        call: apigen-schemas.deleteschema
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: apigen-schemas-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for APIGen API — Schemas. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: apigen-list-schemas
+      description: APIGen List Schemas
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: apigen-schemas.listschemas
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigen-create-schema
+      description: APIGen Create a Schema
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: apigen-schemas.createschema
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigen-get-schema
+      description: APIGen Get a Schema
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: apigen-schemas.getschema
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigen-update-schema
+      description: APIGen Update a Schema
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: apigen-schemas.updateschema
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigen-delete-schema
+      description: APIGen Delete a Schema
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: apigen-schemas.deleteschema
+      outputParameters:
+      - type: object
+        mapping: $.

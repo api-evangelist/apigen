@@ -1,0 +1,146 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: APIGen API — Tokens
+  description: 'APIGen API — Tokens. 3 operations. Lead operation: APIGen List API Tokens. Self-contained Naftiko capability
+    covering one Apigen business surface.'
+  tags:
+  - Apigen
+  - Tokens
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    APIGEN_API_KEY: APIGEN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: apigen-tokens
+    baseUri: https://api.apigen.com/v1
+    description: APIGen API — Tokens business capability. Self-contained, no shared references.
+    resources:
+    - name: users-me-tokens
+      path: /users/me/tokens
+      operations:
+      - name: listtokens
+        method: GET
+        description: APIGen List API Tokens
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createtoken
+        method: POST
+        description: APIGen Create an API Token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: users-me-tokens-tokenId
+      path: /users/me/tokens/{tokenId}
+      operations:
+      - name: deletetoken
+        method: DELETE
+        description: APIGen Revoke an API Token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tokenId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.APIGEN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: apigen-tokens-rest
+    port: 8080
+    description: REST adapter for APIGen API — Tokens. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/users/me/tokens
+      name: users-me-tokens
+      description: REST surface for users-me-tokens.
+      operations:
+      - method: GET
+        name: listtokens
+        description: APIGen List API Tokens
+        call: apigen-tokens.listtokens
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createtoken
+        description: APIGen Create an API Token
+        call: apigen-tokens.createtoken
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/users/me/tokens/{tokenid}
+      name: users-me-tokens-tokenid
+      description: REST surface for users-me-tokens-tokenId.
+      operations:
+      - method: DELETE
+        name: deletetoken
+        description: APIGen Revoke an API Token
+        call: apigen-tokens.deletetoken
+        with:
+          tokenId: rest.tokenId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: apigen-tokens-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for APIGen API — Tokens. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: apigen-list-api-tokens
+      description: APIGen List API Tokens
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: apigen-tokens.listtokens
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigen-create-api-token
+      description: APIGen Create an API Token
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: apigen-tokens.createtoken
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apigen-revoke-api-token
+      description: APIGen Revoke an API Token
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: apigen-tokens.deletetoken
+      with:
+        tokenId: tools.tokenId
+      outputParameters:
+      - type: object
+        mapping: $.
