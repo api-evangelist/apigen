@@ -32,7 +32,7 @@ apis:
       - url: https://github.com/ApiGen/ApiGen
         type: GitHubRepository
       - url: https://packagist.org/packages/apigen/apigen
-        type: SDK
+        type: SDKs
         title: Composer Package
       - url: openapi/apigen-apigen-openapi.yml
         type: OpenAPI
@@ -56,7 +56,7 @@ common:
   - url: https://github.com/ApiGen/ApiGen
     type: GitHubOrganization
   - url: https://packagist.org/packages/apigen/apigen
-    type: SDK
+    type: SDKs
   - url: https://hub.docker.com/r/apigen/apigen
     type: Docker
   - type: Features
