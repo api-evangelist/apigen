@@ -51,6 +51,10 @@ apis:
       from PHP source code with full support for PHP 7.1+ features including typed properties, enums, union types,
       readonly classes, and typed class constants.
 common:
+  - type: DomainSecurity
+    url: security/apigen-domain-security.yml
+  - type: Authentication
+    url: authentication/apigen-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/apigen
   - url: https://github.com/ApiGen/ApiGen

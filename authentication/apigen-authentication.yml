@@ -1,0 +1,22 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/apigen-apigen-openapi.yml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  sources:
+  - openapi/apigen-apigen-openapi.yml
+- name: apiKey
+  type: apiKey
+  in: header
+  parameter: X-API-Key
+  sources:
+  - openapi/apigen-apigen-openapi.yml
