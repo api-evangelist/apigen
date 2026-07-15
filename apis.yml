@@ -51,6 +51,8 @@ apis:
       from PHP source code with full support for PHP 7.1+ features including typed properties, enums, union types,
       readonly classes, and typed class constants.
 common:
+  - type: AgenticAccess
+    url: agentic-access/apigen-agentic-access.yml
   - type: DomainSecurity
     url: security/apigen-domain-security.yml
   - type: Authentication
