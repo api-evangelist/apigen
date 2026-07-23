@@ -1,0 +1,349 @@
+openapi: 3.1.0
+info:
+  title: APIGen Connectors Tests API
+  description: The APIGen API provides programmatic access to the APIGen AI-powered API generation platform. It allows you to manage projects, design and generate APIs, define endpoints and schemas, configure connectors to external data sources, deploy APIs to various environments, run automated tests, and manage users and API tokens.
+  version: 1.0.0
+  contact:
+    name: APIGen Support
+    url: https://www.apigen.com/support
+    email: support@apigen.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api.apigen.com/v1
+  description: Production
+security:
+- bearerAuth: []
+- apiKey: []
+tags:
+- name: Tests
+  description: Create and run automated API tests.
+paths:
+  /projects/{projectId}/apis/{apiId}/tests:
+    get:
+      operationId: listTests
+      summary: APIGen List Tests
+      description: Returns all test suites for an API.
+      tags:
+      - Tests
+      parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A list of tests.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Test'
+                  total:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createTest
+      summary: APIGen Create a Test
+      description: Creates a new test suite for an API.
+      tags:
+      - Tests
+      parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TestInput'
+      responses:
+        '201':
+          description: Test created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Test'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /projects/{projectId}/apis/{apiId}/tests/{testId}:
+    get:
+      operationId: getTest
+      summary: APIGen Get a Test
+      description: Returns a single test suite by ID.
+      tags:
+      - Tests
+      parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/TestId'
+      responses:
+        '200':
+          description: A test.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Test'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteTest
+      summary: APIGen Delete a Test
+      description: Deletes a test suite.
+      tags:
+      - Tests
+      parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/TestId'
+      responses:
+        '204':
+          description: Test deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /projects/{projectId}/apis/{apiId}/tests/{testId}/run:
+    post:
+      operationId: runTest
+      summary: APIGen Run a Test
+      description: Executes a test suite against the API and returns results.
+      tags:
+      - Tests
+      parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/TestId'
+      responses:
+        '200':
+          description: Test results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestRun'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Test:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        apiId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          enum:
+          - unit
+          - integration
+          - contract
+          - load
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCase'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+      - id
+      - apiId
+      - name
+      - type
+      - createdAt
+      - updatedAt
+    TestRun:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        testId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - passed
+          - failed
+          - error
+        totalCases:
+          type: integer
+        passedCases:
+          type: integer
+        failedCases:
+          type: integer
+        duration:
+          type: number
+          description: Duration in milliseconds.
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              caseName:
+                type: string
+              status:
+                type: string
+                enum:
+                - passed
+                - failed
+                - error
+              message:
+                type: string
+        createdAt:
+          type: string
+          format: date-time
+    TestInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+        type:
+          type: string
+          enum:
+          - unit
+          - integration
+          - contract
+          - load
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCase'
+      required:
+      - name
+      - type
+    TestCase:
+      type: object
+      properties:
+        name:
+          type: string
+        endpointId:
+          type: string
+          format: uuid
+        request:
+          type: object
+          properties:
+            method:
+              type: string
+            path:
+              type: string
+            headers:
+              type: object
+            body:
+              type: object
+        expectedResponse:
+          type: object
+          properties:
+            statusCode:
+              type: integer
+            body:
+              type: object
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                  message:
+                    type: string
+  parameters:
+    ApiId:
+      name: apiId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ProjectId:
+      name: projectId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        default: 20
+        maximum: 100
+    Offset:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+    TestId:
+      name: testId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key

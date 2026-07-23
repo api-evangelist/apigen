@@ -1,0 +1,203 @@
+openapi: 3.1.0
+info:
+  title: APIGen Connectors Tokens API
+  description: The APIGen API provides programmatic access to the APIGen AI-powered API generation platform. It allows you to manage projects, design and generate APIs, define endpoints and schemas, configure connectors to external data sources, deploy APIs to various environments, run automated tests, and manage users and API tokens.
+  version: 1.0.0
+  contact:
+    name: APIGen Support
+    url: https://www.apigen.com/support
+    email: support@apigen.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api.apigen.com/v1
+  description: Production
+security:
+- bearerAuth: []
+- apiKey: []
+tags:
+- name: Tokens
+  description: Manage API authentication tokens.
+paths:
+  /users/me/tokens:
+    get:
+      operationId: listTokens
+      summary: APIGen List API Tokens
+      description: Returns all API tokens for the authenticated user.
+      tags:
+      - Tokens
+      responses:
+        '200':
+          description: A list of tokens.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Token'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createToken
+      summary: APIGen Create an API Token
+      description: Creates a new API token. The token value is returned only once in the response and cannot be retrieved again.
+      tags:
+      - Tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenInput'
+      responses:
+        '201':
+          description: Token created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenCreated'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /users/me/tokens/{tokenId}:
+    delete:
+      operationId: deleteToken
+      summary: APIGen Revoke an API Token
+      description: Revokes and deletes an API token.
+      tags:
+      - Tokens
+      parameters:
+      - name: tokenId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: Token revoked.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Token:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        prefix:
+          type: string
+          description: First few characters of the token for identification.
+        scopes:
+          type: array
+          items:
+            type: string
+        expiresAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+      required:
+      - id
+      - name
+      - prefix
+      - createdAt
+    TokenCreated:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        token:
+          type: string
+          description: The full token value. This is only returned once at creation time.
+        scopes:
+          type: array
+          items:
+            type: string
+        expiresAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+    TokenInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        scopes:
+          type: array
+          items:
+            type: string
+            enum:
+            - read
+            - write
+            - admin
+        expiresAt:
+          type: string
+          format: date-time
+      required:
+      - name
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                  message:
+                    type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key

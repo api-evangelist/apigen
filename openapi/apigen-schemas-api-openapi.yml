@@ -1,0 +1,271 @@
+openapi: 3.1.0
+info:
+  title: APIGen Connectors Schemas API
+  description: The APIGen API provides programmatic access to the APIGen AI-powered API generation platform. It allows you to manage projects, design and generate APIs, define endpoints and schemas, configure connectors to external data sources, deploy APIs to various environments, run automated tests, and manage users and API tokens.
+  version: 1.0.0
+  contact:
+    name: APIGen Support
+    url: https://www.apigen.com/support
+    email: support@apigen.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api.apigen.com/v1
+  description: Production
+security:
+- bearerAuth: []
+- apiKey: []
+tags:
+- name: Schemas
+  description: Define data schemas for APIs.
+paths:
+  /projects/{projectId}/apis/{apiId}/schemas:
+    get:
+      operationId: listSchemas
+      summary: APIGen List Schemas
+      description: Returns all schemas defined for an API.
+      tags:
+      - Schemas
+      parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: A list of schemas.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Schema'
+                  total:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createSchema
+      summary: APIGen Create a Schema
+      description: Creates a new data schema for an API.
+      tags:
+      - Schemas
+      parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SchemaInput'
+      responses:
+        '201':
+          description: Schema created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schema'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /projects/{projectId}/apis/{apiId}/schemas/{schemaId}:
+    get:
+      operationId: getSchema
+      summary: APIGen Get a Schema
+      description: Returns a single schema by ID.
+      tags:
+      - Schemas
+      parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/SchemaId'
+      responses:
+        '200':
+          description: A schema.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schema'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateSchema
+      summary: APIGen Update a Schema
+      description: Updates an existing schema definition.
+      tags:
+      - Schemas
+      parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/SchemaId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SchemaInput'
+      responses:
+        '200':
+          description: Schema updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schema'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+    delete:
+      operationId: deleteSchema
+      summary: APIGen Delete a Schema
+      description: Deletes a schema.
+      tags:
+      - Schemas
+      parameters:
+      - $ref: '#/components/parameters/ProjectId'
+      - $ref: '#/components/parameters/ApiId'
+      - $ref: '#/components/parameters/SchemaId'
+      responses:
+        '204':
+          description: Schema deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    ApiId:
+      name: apiId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ProjectId:
+      name: projectId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    SchemaId:
+      name: schemaId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        default: 20
+        maximum: 100
+    Offset:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+  schemas:
+    SchemaInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+        definition:
+          type: object
+      required:
+      - name
+      - definition
+    Schema:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        apiId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        definition:
+          type: object
+          description: The JSON Schema definition.
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+      - id
+      - apiId
+      - name
+      - definition
+      - createdAt
+      - updatedAt
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                  message:
+                    type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key

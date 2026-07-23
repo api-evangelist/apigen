@@ -1,0 +1,138 @@
+openapi: 3.1.0
+info:
+  title: APIGen Connectors Users API
+  description: The APIGen API provides programmatic access to the APIGen AI-powered API generation platform. It allows you to manage projects, design and generate APIs, define endpoints and schemas, configure connectors to external data sources, deploy APIs to various environments, run automated tests, and manage users and API tokens.
+  version: 1.0.0
+  contact:
+    name: APIGen Support
+    url: https://www.apigen.com/support
+    email: support@apigen.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://api.apigen.com/v1
+  description: Production
+security:
+- bearerAuth: []
+- apiKey: []
+tags:
+- name: Users
+  description: Manage user profiles.
+paths:
+  /users/me:
+    get:
+      operationId: getCurrentUser
+      summary: APIGen Get Current User
+      description: Returns the profile of the authenticated user.
+      tags:
+      - Users
+      responses:
+        '200':
+          description: The current user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    put:
+      operationId: updateCurrentUser
+      summary: APIGen Update Current User
+      description: Updates the profile of the authenticated user.
+      tags:
+      - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '200':
+          description: User updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+components:
+  responses:
+    Unauthorized:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        organization:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+      - id
+      - email
+      - name
+      - createdAt
+      - updatedAt
+    UserInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        organization:
+          type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                  message:
+                    type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
