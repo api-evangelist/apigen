@@ -13,43 +13,218 @@ tags:
   - Open Source
   - PHP
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/apigen.png
 access: 3rd-Party
 created: '2025-01-08'
 modified: '2026-05-19'
 position: Consumer
 specificationVersion: '0.19'
 apis:
-  - aid: apigen:apigen
-    name: APIGen
-    tags:
-      - Documentation
-      - Generation
-      - PHP
-    humanURL: https://github.com/ApiGen/ApiGen
-    baseURL: https://api.apigen.com/v1
-    properties:
-      - url: https://github.com/ApiGen/ApiGen
-        type: GitHubRepository
-      - url: https://packagist.org/packages/apigen/apigen
-        type: SDKs
-        title: Composer Package
-      - url: openapi/apigen-apigen-openapi.yml
-        type: OpenAPI
-      - url: json-schema/apigen-project-schema.json
-        type: JSONSchema
-      - url: json-schema/apigen-api-schema.json
-        type: JSONSchema
-      - url: json-schema/apigen-endpoint-schema.json
-        type: JSONSchema
-      - url: json-schema/apigen-deployment-schema.json
-        type: JSONSchema
-      - url: json-ld/apigen-context.jsonld
-        type: JSONLD
-    description: >-
-      ApiGen is an easy to use and modern PHP API documentation generator that automatically builds API documentation
-      from PHP source code with full support for PHP 7.1+ features including typed properties, enums, union types,
-      readonly classes, and typed class constants.
+- aid: apigen:apigen-connectors-api
+  name: APIGen Connectors API
+  description: Configure connections to external data sources.
+  humanURL: https://github.com/ApiGen/ApiGen
+  baseURL: https://api.apigen.com/v1
+  tags:
+  - Connectors
+  properties:
+  - type: OpenAPI
+    url: openapi/apigen-connectors-api-openapi.yml
+  - type: GitHubRepository
+    url: https://github.com/ApiGen/ApiGen
+  - type: SDKs
+    url: https://packagist.org/packages/apigen/apigen
+  - type: JSONSchema
+    url: json-schema/apigen-project-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-api-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-endpoint-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-deployment-schema.json
+  - type: JSONLD
+    url: json-ld/apigen-context.jsonld
+- aid: apigen:apigen-deployments-api
+  name: APIGen Deployments API
+  description: Deploy APIs to target environments.
+  humanURL: https://github.com/ApiGen/ApiGen
+  baseURL: https://api.apigen.com/v1
+  tags:
+  - Deployments
+  properties:
+  - type: OpenAPI
+    url: openapi/apigen-deployments-api-openapi.yml
+  - type: GitHubRepository
+    url: https://github.com/ApiGen/ApiGen
+  - type: SDKs
+    url: https://packagist.org/packages/apigen/apigen
+  - type: JSONSchema
+    url: json-schema/apigen-project-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-api-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-endpoint-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-deployment-schema.json
+  - type: JSONLD
+    url: json-ld/apigen-context.jsonld
+- aid: apigen:apigen-endpoints-api
+  name: APIGen Endpoints API
+  description: Define and manage API endpoints.
+  humanURL: https://github.com/ApiGen/ApiGen
+  baseURL: https://api.apigen.com/v1
+  tags:
+  - Endpoints
+  properties:
+  - type: OpenAPI
+    url: openapi/apigen-endpoints-api-openapi.yml
+  - type: GitHubRepository
+    url: https://github.com/ApiGen/ApiGen
+  - type: SDKs
+    url: https://packagist.org/packages/apigen/apigen
+  - type: JSONSchema
+    url: json-schema/apigen-project-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-api-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-endpoint-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-deployment-schema.json
+  - type: JSONLD
+    url: json-ld/apigen-context.jsonld
+- aid: apigen:apigen-projects-api
+  name: APIGen Projects API
+  description: Manage API generation projects.
+  humanURL: https://github.com/ApiGen/ApiGen
+  baseURL: https://api.apigen.com/v1
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/apigen-projects-api-openapi.yml
+  - type: GitHubRepository
+    url: https://github.com/ApiGen/ApiGen
+  - type: SDKs
+    url: https://packagist.org/packages/apigen/apigen
+  - type: JSONSchema
+    url: json-schema/apigen-project-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-api-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-endpoint-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-deployment-schema.json
+  - type: JSONLD
+    url: json-ld/apigen-context.jsonld
+- aid: apigen:apigen-schemas-api
+  name: APIGen Schemas API
+  description: Define data schemas for APIs.
+  humanURL: https://github.com/ApiGen/ApiGen
+  baseURL: https://api.apigen.com/v1
+  tags:
+  - Schemas
+  properties:
+  - type: OpenAPI
+    url: openapi/apigen-schemas-api-openapi.yml
+  - type: GitHubRepository
+    url: https://github.com/ApiGen/ApiGen
+  - type: SDKs
+    url: https://packagist.org/packages/apigen/apigen
+  - type: JSONSchema
+    url: json-schema/apigen-project-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-api-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-endpoint-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-deployment-schema.json
+  - type: JSONLD
+    url: json-ld/apigen-context.jsonld
+- aid: apigen:apigen-tests-api
+  name: APIGen Tests API
+  description: Create and run automated API tests.
+  humanURL: https://github.com/ApiGen/ApiGen
+  baseURL: https://api.apigen.com/v1
+  tags:
+  - Tests
+  properties:
+  - type: OpenAPI
+    url: openapi/apigen-tests-api-openapi.yml
+  - type: GitHubRepository
+    url: https://github.com/ApiGen/ApiGen
+  - type: SDKs
+    url: https://packagist.org/packages/apigen/apigen
+  - type: JSONSchema
+    url: json-schema/apigen-project-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-api-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-endpoint-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-deployment-schema.json
+  - type: JSONLD
+    url: json-ld/apigen-context.jsonld
+- aid: apigen:apigen-tokens-api
+  name: APIGen Tokens API
+  description: Manage API authentication tokens.
+  humanURL: https://github.com/ApiGen/ApiGen
+  baseURL: https://api.apigen.com/v1
+  tags:
+  - Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/apigen-tokens-api-openapi.yml
+  - type: GitHubRepository
+    url: https://github.com/ApiGen/ApiGen
+  - type: SDKs
+    url: https://packagist.org/packages/apigen/apigen
+  - type: JSONSchema
+    url: json-schema/apigen-project-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-api-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-endpoint-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-deployment-schema.json
+  - type: JSONLD
+    url: json-ld/apigen-context.jsonld
+- aid: apigen:apigen-users-api
+  name: APIGen Users API
+  description: Manage user profiles.
+  humanURL: https://github.com/ApiGen/ApiGen
+  baseURL: https://api.apigen.com/v1
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/apigen-users-api-openapi.yml
+  - type: GitHubRepository
+    url: https://github.com/ApiGen/ApiGen
+  - type: SDKs
+    url: https://packagist.org/packages/apigen/apigen
+  - type: JSONSchema
+    url: json-schema/apigen-project-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-api-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-endpoint-schema.json
+  - type: JSONSchema
+    url: json-schema/apigen-deployment-schema.json
+  - type: JSONLD
+    url: json-ld/apigen-context.jsonld
 common:
   - type: AgenticAccess
     url: agentic-access/apigen-agentic-access.yml
