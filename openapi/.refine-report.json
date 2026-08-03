@@ -1,0 +1,28 @@
+{
+  "provider": "apigen",
+  "sources": [
+    "apigen-connectors-api-openapi.yml",
+    "apigen-deployments-api-openapi.yml",
+    "apigen-endpoints-api-openapi.yml",
+    "apigen-projects-api-openapi.yml",
+    "apigen-schemas-api-openapi.yml",
+    "apigen-tests-api-openapi.yml",
+    "apigen-tokens-api-openapi.yml",
+    "apigen-users-api-openapi.yml"
+  ],
+  "outputs": [
+    "apigen-connectors-api-openapi.yml",
+    "apigen-deployments-api-openapi.yml",
+    "apigen-endpoints-api-openapi.yml",
+    "apigen-projects-api-openapi.yml",
+    "apigen-schemas-api-openapi.yml",
+    "apigen-tests-api-openapi.yml",
+    "apigen-tokens-api-openapi.yml",
+    "apigen-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
