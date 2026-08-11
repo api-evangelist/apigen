@@ -226,6 +226,10 @@ apis:
   - type: JSONLD
     url: json-ld/apigen-context.jsonld
 common:
+  - type: IssueTracker
+    url: https://github.com/ApiGen/ApiGen/issues
+  - type: Releases
+    url: https://github.com/ApiGen/ApiGen/releases
   - type: AgenticAccess
     url: agentic-access/apigen-agentic-access.yml
   - type: DomainSecurity
