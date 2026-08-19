@@ -1,0 +1,172 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "APIGen Connectors Schemas API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Schemas",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "APIGen List Schemas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apigen.com/v1/projects/:projectId/apis/:apiId/schemas",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns all schemas defined for an API."
+        },
+        {
+          "info": {
+            "name": "APIGen Create a Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apigen.com/v1/projects/:projectId/apis/:apiId/schemas",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new data schema for an API."
+        },
+        {
+          "info": {
+            "name": "APIGen Get a Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apigen.com/v1/projects/:projectId/apis/:apiId/schemas/:schemaId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schemaId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a single schema by ID."
+        },
+        {
+          "info": {
+            "name": "APIGen Update a Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.apigen.com/v1/projects/:projectId/apis/:apiId/schemas/:schemaId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schemaId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing schema definition."
+        },
+        {
+          "info": {
+            "name": "APIGen Delete a Schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.apigen.com/v1/projects/:projectId/apis/:apiId/schemas/:schemaId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "schemaId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a schema."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

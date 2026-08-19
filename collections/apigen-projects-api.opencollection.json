@@ -1,0 +1,243 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "APIGen Connectors Projects API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "APIGen List Projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apigen.com/v1/projects",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of projects for the authenticated user."
+        },
+        {
+          "info": {
+            "name": "APIGen Create a Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apigen.com/v1/projects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new API generation project."
+        },
+        {
+          "info": {
+            "name": "APIGen Get a Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apigen.com/v1/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a single project by ID."
+        },
+        {
+          "info": {
+            "name": "APIGen Update a Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.apigen.com/v1/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing project."
+        },
+        {
+          "info": {
+            "name": "APIGen Delete a Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.apigen.com/v1/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a project and all associated resources."
+        },
+        {
+          "info": {
+            "name": "APIGen List APIs in a Project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apigen.com/v1/projects/:projectId/apis",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns all APIs belonging to a project."
+        },
+        {
+          "info": {
+            "name": "APIGen Create an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apigen.com/v1/projects/:projectId/apis",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new API within a project. You can provide a prompt for AI-powered generation or supply an existing OpenAPI specification."
+        },
+        {
+          "info": {
+            "name": "APIGen Get an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apigen.com/v1/projects/:projectId/apis/:apiId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a single API by ID."
+        },
+        {
+          "info": {
+            "name": "APIGen Update an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.apigen.com/v1/projects/:projectId/apis/:apiId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing API definition."
+        },
+        {
+          "info": {
+            "name": "APIGen Delete an API",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.apigen.com/v1/projects/:projectId/apis/:apiId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "apiId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes an API and its endpoints."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

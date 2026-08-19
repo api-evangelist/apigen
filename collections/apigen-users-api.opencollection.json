@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "APIGen Connectors Users API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "APIGen Get Current User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apigen.com/v1/users/me"
+          },
+          "docs": "Returns the profile of the authenticated user."
+        },
+        {
+          "info": {
+            "name": "APIGen Update Current User",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.apigen.com/v1/users/me",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the profile of the authenticated user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

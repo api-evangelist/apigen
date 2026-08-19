@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "APIGen Connectors Tokens API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "APIGen List API Tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.apigen.com/v1/users/me/tokens"
+          },
+          "docs": "Returns all API tokens for the authenticated user."
+        },
+        {
+          "info": {
+            "name": "APIGen Create an API Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.apigen.com/v1/users/me/tokens",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new API token. The token value is returned only once in the response and cannot be retrieved again."
+        },
+        {
+          "info": {
+            "name": "APIGen Revoke an API Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.apigen.com/v1/users/me/tokens/:tokenId",
+            "params": [
+              {
+                "name": "tokenId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Revokes and deletes an API token."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
