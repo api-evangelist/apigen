@@ -10,6 +10,12 @@ tags:
   - Code
   - Documentation
   - Generation
+  - Open-Source
+  - PHP
+tags_raw:
+  - Code
+  - Documentation
+  - Generation
   - Open Source
   - PHP
 type: Index
@@ -63,6 +69,8 @@ apis:
   humanURL: https://github.com/ApiGen/ApiGen
   baseURL: https://api.apigen.com/v1
   tags:
+  - Deployment
+  tags_raw:
   - Deployments
   properties:
   - type: OpenAPI
@@ -86,7 +94,8 @@ apis:
   description: Define and manage API endpoints.
   humanURL: https://github.com/ApiGen/ApiGen
   baseURL: https://api.apigen.com/v1
-  tags:
+  tags: []
+  tags_raw:
   - Endpoints
   properties:
   - type: OpenAPI
@@ -111,6 +120,8 @@ apis:
   humanURL: https://github.com/ApiGen/ApiGen
   baseURL: https://api.apigen.com/v1
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
@@ -207,6 +218,8 @@ apis:
   humanURL: https://github.com/ApiGen/ApiGen
   baseURL: https://api.apigen.com/v1
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
