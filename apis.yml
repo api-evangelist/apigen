@@ -158,6 +158,8 @@ apis:
   humanURL: https://github.com/ApiGen/ApiGen
   baseURL: https://api.apigen.com/v1
   tags:
+  - Schema
+  tags_raw:
   - Schemas
   properties:
   - type: OpenAPI
