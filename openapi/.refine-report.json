@@ -1,14 +1,7 @@
 {
   "provider": "apigen",
   "sources": [
-    "apigen-connectors-api-openapi.yml",
-    "apigen-deployments-api-openapi.yml",
-    "apigen-endpoints-api-openapi.yml",
-    "apigen-projects-api-openapi.yml",
-    "apigen-schemas-api-openapi.yml",
-    "apigen-tests-api-openapi.yml",
-    "apigen-tokens-api-openapi.yml",
-    "apigen-users-api-openapi.yml"
+    "_original/apigen-apigen-openapi.yml"
   ],
   "outputs": [
     "apigen-connectors-api-openapi.yml",
@@ -23,6 +16,24 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "apigen-apigen-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apigen-apigen-openapi.yml: tagged paths GET /projects/{projectId}/apis -> Projects",
+    "apigen-apigen-openapi.yml: tagged paths POST /projects/{projectId}/apis -> Projects",
+    "apigen-apigen-openapi.yml: tagged paths GET /projects/{projectId}/apis/{apiId} -> Projects",
+    "apigen-apigen-openapi.yml: tagged paths PUT /projects/{projectId}/apis/{apiId} -> Projects",
+    "apigen-apigen-openapi.yml: tagged paths DELETE /projects/{projectId}/apis/{apiId} -> Projects",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "apigen-connectors-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apigen-deployments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apigen-endpoints-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apigen-projects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apigen-schemas-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apigen-tests-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apigen-tokens-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "apigen-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
