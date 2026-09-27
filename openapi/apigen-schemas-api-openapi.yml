@@ -143,6 +143,25 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    ValidationError:
+      description: Validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     SchemaInput:
       type: object
@@ -206,41 +225,16 @@ components:
                     type: string
                   message:
                     type: string
-  responses:
-    ValidationError:
-      description: Validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
-    ProjectId:
-      name: projectId
+    SchemaId:
+      name: schemaId
       in: path
       required: true
       schema:
         type: string
         format: uuid
-    Offset:
-      name: offset
-      in: query
-      schema:
-        type: integer
-        default: 0
-    SchemaId:
-      name: schemaId
+    ProjectId:
+      name: projectId
       in: path
       required: true
       schema:
@@ -260,6 +254,12 @@ components:
         type: integer
         default: 20
         maximum: 100
+    Offset:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
   securitySchemes:
     bearerAuth:
       type: http

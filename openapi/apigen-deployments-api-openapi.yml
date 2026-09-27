@@ -133,55 +133,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    ProjectId:
-      name: projectId
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-    DeploymentId:
-      name: deploymentId
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-    Offset:
-      name: offset
-      in: query
-      schema:
-        type: integer
-        default: 0
-    ApiId:
-      name: apiId
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-    Limit:
-      name: limit
-      in: query
-      schema:
-        type: integer
-        default: 20
-        maximum: 100
   schemas:
-    DeploymentInput:
-      type: object
-      properties:
-        environment:
-          type: string
-          enum:
-          - development
-          - staging
-          - production
-        version:
-          type: string
-      required:
-      - environment
     Deployment:
       type: object
       properties:
@@ -224,6 +176,19 @@ components:
       - status
       - createdAt
       - updatedAt
+    DeploymentInput:
+      type: object
+      properties:
+        environment:
+          type: string
+          enum:
+          - development
+          - staging
+          - production
+        version:
+          type: string
+      required:
+      - environment
     Error:
       type: object
       properties:
@@ -243,6 +208,41 @@ components:
                     type: string
                   message:
                     type: string
+  parameters:
+    ProjectId:
+      name: projectId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    DeploymentId:
+      name: deploymentId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        default: 20
+        maximum: 100
+    ApiId:
+      name: apiId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    Offset:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
   securitySchemes:
     bearerAuth:
       type: http

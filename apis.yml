@@ -9,7 +9,7 @@ tags:
 - Code
 - Documentation
 - Generation
-- Open-Source
+- Open Source
 - PHP
 tags_raw:
 - Code
@@ -17,9 +17,14 @@ tags_raw:
 - Generation
 - Open Source
 - PHP
+- Open-Source
 type: Index
 deliveryModel:
   model: unknown
+  license_evidence:
+    repo: apigen/apigen
+    spdx: NOASSERTION
+    stars: 2167
   open_source: unknown
   commercial: false
   callable_host: true
@@ -28,7 +33,7 @@ deliveryModel:
   source:
   - openapi
   - repository-unlicensed
-  generated: '2026-08-28'
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
