@@ -136,105 +136,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    ValidationError:
-      description: Validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    TestRun:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        testId:
-          type: string
-          format: uuid
-        status:
-          type: string
-          enum:
-          - passed
-          - failed
-          - error
-        totalCases:
-          type: integer
-        passedCases:
-          type: integer
-        failedCases:
-          type: integer
-        duration:
-          type: number
-          description: Duration in milliseconds.
-        results:
-          type: array
-          items:
-            type: object
-            properties:
-              caseName:
-                type: string
-              status:
-                type: string
-                enum:
-                - passed
-                - failed
-                - error
-              message:
-                type: string
-        createdAt:
-          type: string
-          format: date-time
-    Test:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        apiId:
-          type: string
-          format: uuid
-        name:
-          type: string
-        description:
-          type: string
-        type:
-          type: string
-          enum:
-          - unit
-          - integration
-          - contract
-          - load
-        cases:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestCase'
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-      required:
-      - id
-      - apiId
-      - name
-      - type
-      - createdAt
-      - updatedAt
     TestInput:
       type: object
       properties:
@@ -284,6 +186,43 @@ components:
               type: integer
             body:
               type: object
+    Test:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        apiId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          enum:
+          - unit
+          - integration
+          - contract
+          - load
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCase'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+      - id
+      - apiId
+      - name
+      - type
+      - createdAt
+      - updatedAt
     Error:
       type: object
       properties:
@@ -303,14 +242,74 @@ components:
                     type: string
                   message:
                     type: string
+    TestRun:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        testId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - passed
+          - failed
+          - error
+        totalCases:
+          type: integer
+        passedCases:
+          type: integer
+        failedCases:
+          type: integer
+        duration:
+          type: number
+          description: Duration in milliseconds.
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              caseName:
+                type: string
+              status:
+                type: string
+                enum:
+                - passed
+                - failed
+                - error
+              message:
+                type: string
+        createdAt:
+          type: string
+          format: date-time
+  responses:
+    ValidationError:
+      description: Validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    ProjectId:
-      name: projectId
-      in: path
-      required: true
+    Offset:
+      name: offset
+      in: query
       schema:
-        type: string
-        format: uuid
+        type: integer
+        default: 0
     Limit:
       name: limit
       in: query
@@ -318,6 +317,13 @@ components:
         type: integer
         default: 20
         maximum: 100
+    TestId:
+      name: testId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
     ApiId:
       name: apiId
       in: path
@@ -325,14 +331,8 @@ components:
       schema:
         type: string
         format: uuid
-    Offset:
-      name: offset
-      in: query
-      schema:
-        type: integer
-        default: 0
-    TestId:
-      name: testId
+    ProjectId:
+      name: projectId
       in: path
       required: true
       schema:
