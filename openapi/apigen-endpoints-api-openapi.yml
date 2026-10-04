@@ -143,7 +143,48 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        default: 20
+        maximum: 100
+    EndpointId:
+      name: endpointId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ApiId:
+      name: apiId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    Offset:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+    ProjectId:
+      name: projectId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
   responses:
+    Unauthorized:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     ValidationError:
       description: Validation error.
       content:
@@ -156,37 +197,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    EndpointInput:
-      type: object
-      properties:
-        path:
-          type: string
-        method:
-          type: string
-          enum:
-          - GET
-          - POST
-          - PUT
-          - PATCH
-          - DELETE
-        summary:
-          type: string
-        description:
-          type: string
-        requestSchema:
-          type: object
-        responseSchema:
-          type: object
-      required:
-      - path
-      - method
     Endpoint:
       type: object
       properties:
@@ -246,41 +257,30 @@ components:
                     type: string
                   message:
                     type: string
-  parameters:
-    Offset:
-      name: offset
-      in: query
-      schema:
-        type: integer
-        default: 0
-    Limit:
-      name: limit
-      in: query
-      schema:
-        type: integer
-        default: 20
-        maximum: 100
-    ApiId:
-      name: apiId
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-    EndpointId:
-      name: endpointId
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-    ProjectId:
-      name: projectId
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
+    EndpointInput:
+      type: object
+      properties:
+        path:
+          type: string
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+        summary:
+          type: string
+        description:
+          type: string
+        requestSchema:
+          type: object
+        responseSchema:
+          type: object
+      required:
+      - path
+      - method
   securitySchemes:
     bearerAuth:
       type: http

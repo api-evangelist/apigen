@@ -61,14 +61,14 @@ paths:
           $ref: '#/components/responses/ValidationError'
 components:
   responses:
-    ValidationError:
-      description: Validation error.
+    Unauthorized:
+      description: Authentication required.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required.
+    ValidationError:
+      description: Validation error.
       content:
         application/json:
           schema:

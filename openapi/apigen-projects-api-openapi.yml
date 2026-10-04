@@ -249,7 +249,65 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        default: 20
+        maximum: 100
+    ApiId:
+      name: apiId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    Offset:
+      name: offset
+      in: query
+      schema:
+        type: integer
+        default: 0
+    ProjectId:
+      name: projectId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    Unauthorized:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    ProjectInput:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+      required:
+      - name
     Api:
       type: object
       properties:
@@ -291,36 +349,6 @@ components:
       - status
       - createdAt
       - updatedAt
-    ProjectInput:
-      type: object
-      properties:
-        name:
-          type: string
-          minLength: 1
-          maxLength: 255
-        description:
-          type: string
-      required:
-      - name
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            details:
-              type: array
-              items:
-                type: object
-                properties:
-                  field:
-                    type: string
-                  message:
-                    type: string
     Project:
       type: object
       properties:
@@ -348,6 +376,25 @@ components:
       - status
       - createdAt
       - updatedAt
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                  message:
+                    type: string
     ApiInput:
       type: object
       properties:
@@ -368,53 +415,6 @@ components:
           description: URL to an existing OpenAPI specification to import.
       required:
       - name
-  responses:
-    ValidationError:
-      description: Validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    Offset:
-      name: offset
-      in: query
-      schema:
-        type: integer
-        default: 0
-    Limit:
-      name: limit
-      in: query
-      schema:
-        type: integer
-        default: 20
-        maximum: 100
-    ApiId:
-      name: apiId
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-    ProjectId:
-      name: projectId
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
   securitySchemes:
     bearerAuth:
       type: http
