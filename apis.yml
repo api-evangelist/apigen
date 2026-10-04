@@ -258,6 +258,9 @@ apis:
   - type: JSONLD
     url: json-ld/apigen-context.jsonld
 common:
+- type: CapabilityMap
+  url: capabilities/apigen-capability-edges.yml
+  name: APIGen Business Capability Map
 - type: Website
   url: https://apigen.com
 - type: IssueTracker

@@ -1,0 +1,35 @@
+slug: apigen
+provider: APIGen
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Deployments
+  spec_file: apigen-deployments-api-openapi.yml
+  capability_id: BC-4210.40
+  capability_id_l1: BC-4210
+  capability_name: Deployment Orchestration
+  confidence: 0.75
+  evidence: 'POST /projects/{projectId}/apis/{apiId}/deployments createDeployment; DELETE ... ''Tear Down
+    a Deployment''; description: ''deploy APIs to various environments'''
+  reason: Operations create and tear down deployments of generated APIs to environments, which is deployment
+    orchestration within software release & deployment management.
+- tag: Tests
+  spec_file: apigen-tests-api-openapi.yml
+  capability_id: BC-4200.50
+  capability_id_l1: BC-4200
+  capability_name: Software Quality Engineering
+  confidence: 0.75
+  evidence: 'POST /projects/{projectId}/apis/{apiId}/tests/{testId}/run runTest; schemas: TestCase, TestRun;
+    description: ''run automated tests'''
+  reason: Creation and execution of automated test cases/runs against the API — automated test suite stewardship
+    under software quality engineering.
