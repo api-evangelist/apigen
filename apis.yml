@@ -258,6 +258,12 @@ apis:
   - type: JSONLD
     url: json-ld/apigen-context.jsonld
 common:
+- type: Plans
+  url: plans/apigen-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/apigen-rate-limits.yml
+- type: FinOps
+  url: finops/apigen-finops.yml
 - type: CapabilityMap
   url: capabilities/apigen-capability-edges.yml
   name: APIGen Business Capability Map
