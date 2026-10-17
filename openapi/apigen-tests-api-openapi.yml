@@ -137,55 +137,25 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    TestInput:
+    Error:
       type: object
       properties:
-        name:
-          type: string
-          minLength: 1
-          maxLength: 255
-        description:
-          type: string
-        type:
-          type: string
-          enum:
-          - unit
-          - integration
-          - contract
-          - load
-        cases:
-          type: array
-          items:
-            $ref: '#/components/schemas/TestCase'
-      required:
-      - name
-      - type
-    TestCase:
-      type: object
-      properties:
-        name:
-          type: string
-        endpointId:
-          type: string
-          format: uuid
-        request:
+        error:
           type: object
           properties:
-            method:
+            code:
               type: string
-            path:
+            message:
               type: string
-            headers:
-              type: object
-            body:
-              type: object
-        expectedResponse:
-          type: object
-          properties:
-            statusCode:
-              type: integer
-            body:
-              type: object
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                  message:
+                    type: string
     Test:
       type: object
       properties:
@@ -223,25 +193,29 @@ components:
       - type
       - createdAt
       - updatedAt
-    Error:
+    TestInput:
       type: object
       properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-            message:
-              type: string
-            details:
-              type: array
-              items:
-                type: object
-                properties:
-                  field:
-                    type: string
-                  message:
-                    type: string
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+        description:
+          type: string
+        type:
+          type: string
+          enum:
+          - unit
+          - integration
+          - contract
+          - load
+        cases:
+          type: array
+          items:
+            $ref: '#/components/schemas/TestCase'
+      required:
+      - name
+      - type
     TestRun:
       type: object
       properties:
@@ -284,14 +258,65 @@ components:
         createdAt:
           type: string
           format: date-time
+    TestCase:
+      type: object
+      properties:
+        name:
+          type: string
+        endpointId:
+          type: string
+          format: uuid
+        request:
+          type: object
+          properties:
+            method:
+              type: string
+            path:
+              type: string
+            headers:
+              type: object
+            body:
+              type: object
+        expectedResponse:
+          type: object
+          properties:
+            statusCode:
+              type: integer
+            body:
+              type: object
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Validation error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    Limit:
-      name: limit
+    ProjectId:
+      name: projectId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    Offset:
+      name: offset
       in: query
       schema:
         type: integer
-        default: 20
-        maximum: 100
+        default: 0
     TestId:
       name: testId
       in: path
@@ -306,38 +331,13 @@ components:
       schema:
         type: string
         format: uuid
-    Offset:
-      name: offset
+    Limit:
+      name: limit
       in: query
       schema:
         type: integer
-        default: 0
-    ProjectId:
-      name: projectId
-      in: path
-      required: true
-      schema:
-        type: string
-        format: uuid
-  responses:
-    Unauthorized:
-      description: Authentication required.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: Validation error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+        default: 20
+        maximum: 100
   securitySchemes:
     bearerAuth:
       type: http
