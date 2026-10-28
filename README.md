@@ -1,4 +1,4 @@
-# APIGen (apigen)
+# APIGen
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,66 +66,174 @@
 
 ApiGen is an open source PHP API documentation generator that automatically produces smart and simple documentation from PHP source code. It supports PHP 7.1+ including all PHP 8.3 features like enums, union types, readonly classes, and intersection types. ApiGen is maintained by the ApiGen GitHub organization and can be installed via Docker, Phar binary, or Composer.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/apigen/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/apigen/refs/heads/main/apis.yml)
+**Areas:** Code · Documentation · Generation · Open Source · PHP
 
-## Scope
+## APIGen on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for APIGen is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/apigen/](https://apis.io/providers/apigen/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (8)
 
-- Code
-- Documentation
-- Generation
-- Open Source
-- PHP
+- [APIGen Connectors API](https://apis.io/apis/apigen/apigen-connectors-api/) — Configure connections to external data sources.
+- [APIGen Deployments API](https://apis.io/apis/apigen/apigen-deployments-api/) — Deploy APIs to target environments.
+- [APIGen Endpoints API](https://apis.io/apis/apigen/apigen-endpoints-api/) — Define and manage API endpoints.
+- [APIGen Projects API](https://apis.io/apis/apigen/apigen-projects-api/) — Manage API generation projects.
+- [APIGen Schemas API](https://apis.io/apis/apigen/apigen-schemas-api/) — Define data schemas for APIs.
+- [APIGen Tests API](https://apis.io/apis/apigen/apigen-tests-api/) — Create and run automated API tests.
+- [APIGen Tokens API](https://apis.io/apis/apigen/apigen-tokens-api/) — Manage API authentication tokens.
+- [APIGen Users API](https://apis.io/apis/apigen/apigen-users-api/) — Manage user profiles.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2025-01-08
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### APIGen
+Which operations an agent can call, which act, and which need a human in the loop.
 
-ApiGen is an easy to use and modern PHP API documentation generator that automatically builds API documentation from PHP source code with full support for PHP 7.1+ features including typed properties, enums, union types, readonly classes, and typed class constants.
+- [Apigen Agentic Access](https://apis.io/agentic-access/apigen/apigen-agentic-access/)
 
-- **Human URL:** [https://github.com/ApiGen/ApiGen](https://github.com/ApiGen/ApiGen)
-- **Base URL:** `https://api.apigen.com/v1`
+#### JSON Schema (4)
 
-#### Tags
+The data models the API reads and writes.
 
-- Documentation
-- Generation
-- PHP
+- [APIGen API](https://apis.io/schemas/apigen/apigen-api/)
+- [APIGen Deployment](https://apis.io/schemas/apigen/apigen-deployment/)
+- [APIGen Endpoint](https://apis.io/schemas/apigen/apigen-endpoint/)
+- [APIGen Project](https://apis.io/schemas/apigen/apigen-project/)
 
-#### Properties
+#### JSON Structure (4)
 
-- [GitHub Repository](https://github.com/ApiGen/ApiGen)
-- [SDK](https://packagist.org/packages/apigen/apigen)
-- [OpenAPI](openapi/apigen-apigen-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/apigen-apigen.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/apigen-apigen.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/apigen-project-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/apigen-api-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/apigen-endpoint-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/apigen-deployment-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/apigen-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+Data models expressed in JSON Structure.
 
-## Common Properties
+- [Apigen Api Structure](https://apis.io/json-structure/apigen/apigen-api-structure/)
+- [Apigen Deployment Structure](https://apis.io/json-structure/apigen/apigen-deployment-structure/)
+- [Apigen Endpoint Structure](https://apis.io/json-structure/apigen/apigen-endpoint-structure/)
+- [Apigen Project Structure](https://apis.io/json-structure/apigen/apigen-project-structure/)
 
-- [LinkedIn](https://www.linkedin.com/company/apigen)
-- [GitHub Organization](https://github.com/ApiGen/ApiGen)
-- [SDK](https://packagist.org/packages/apigen/apigen)
-- [Docker](https://hub.docker.com/r/apigen/apigen)
-- [Features](undefined)
-- [Use Cases](undefined)
-- [Integrations](undefined)
+#### JSON-LD (1)
 
-## Maintainers
+Linked-data contexts for the provider's vocabulary.
 
-**FN:** Kin Lane
-**Email:** info@apievangelist.com
+- [Apigen Context](https://apis.io/jsonld/apigen/apigen-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Apigen Vocabulary](https://apis.io/vocabularies/apigen/apigen-vocabulary/)
+
+#### Examples (4)
+
+Example requests and responses.
+
+- [Apigen Api Example](https://apis.io/examples/apigen/apigen-api-example/)
+- [Apigen Deployment Example](https://apis.io/examples/apigen/apigen-deployment-example/)
+- [Apigen Endpoint Example](https://apis.io/examples/apigen/apigen-endpoint-example/)
+- [Apigen Project Example](https://apis.io/examples/apigen/apigen-project-example/)
+
+#### Collections (9)
+
+Postman and Open Collection request collections.
+
+- [APIGen API](https://apis.io/collections/apigen/open-apigen-apigen/)
+- [APIGen Connectors API](https://apis.io/collections/apigen/open-apigen-connectors-api/)
+- [APIGen Connectors Deployments API](https://apis.io/collections/apigen/open-apigen-deployments-api/)
+- [APIGen Connectors Endpoints API](https://apis.io/collections/apigen/open-apigen-endpoints-api/)
+- [APIGen Connectors Projects API](https://apis.io/collections/apigen/open-apigen-projects-api/)
+- [APIGen Connectors Schemas API](https://apis.io/collections/apigen/open-apigen-schemas-api/)
+- [APIGen Connectors Tests API](https://apis.io/collections/apigen/open-apigen-tests-api/)
+- [APIGen Connectors Tokens API](https://apis.io/collections/apigen/open-apigen-tokens-api/)
+- [APIGen Connectors Users API](https://apis.io/collections/apigen/open-apigen-users-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [APIGen — jsonschema rules](https://apis.io/rules/apigen/apigen-jsonschema-spectral-rules/)
+- [APIGen API Rules](https://apis.io/rules/apigen/apigen-spectral-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Apigen Authentication](https://apis.io/security/apigen/apigen-authentication/)
+- [Apigen Domain Security](https://apis.io/security/apigen/apigen-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Apigen Plans Pricing](https://apis.io/plans/apigen/apigen-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Apigen Rate Limits](https://apis.io/rate-limits/apigen/apigen-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Apigen Finops](https://apis.io/finops/apigen/apigen-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://apigen.com)
+- [GitHub](https://github.com/ApiGen/ApiGen)
+
+## API Evangelist rating
+
+**Kin Score 34.1** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 68.9 |
+| Contract governance | 13.6 |
+| Operational transparency | 28.9 |
+| Developer ergonomics | 19.0 |
+| Access clarity | 7.9 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/apigen/](https://apis.io/providers/apigen/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for APIGen: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/apigen/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
